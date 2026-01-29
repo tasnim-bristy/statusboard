@@ -1,0 +1,528 @@
+<body>
+  <ui5-bar design="Header">
+    <!-- Start content -->
+    <ui5-button
+      icon="menu2"
+      tooltip="Menu"
+      class="menu2"
+      design="Transparent"
+      slot="startContent"
+    ></ui5-button>
+    <ui5-avatar slot="startContent" shape="Square">
+      <img src="assets/logo.svg" />
+    </ui5-avatar>
+    <ui5-label id="basic-label" style="color: #1d2d3e; font-size: 20px; font-weight: 700"
+      >Machineboard</ui5-label
+    >
+
+    <!-- End content -->
+    <div slot="endContent" style="display: flex; align-items: center; gap: 10px">
+      <!-- Date picker + text -->
+      <div style="display: flex; align-items: center; gap: 5px">
+        <ui5-datetime-picker class="dtp"></ui5-datetime-picker>
+        <span class="user-name">Elias Abram</span>
+      </div>
+
+      <!-- Logout button -->
+      <ui5-button tooltip="Logout">Logout</ui5-button>
+
+      <!-- Language selector -->
+      <ui5-select style="width: 5px">
+        <ui5-option value="en" selected>EN</ui5-option>
+        <ui5-option value="de">GE</ui5-option>
+        <ui5-option value="bg">BG</ui5-option>
+      </ui5-select>
+    </div>
+  </ui5-bar>
+
+  <!-- main -->
+  <main style="padding: 12px">
+    <div class="main-section">
+      <section class="card sec-1">
+        <ui5-button class="statusboard-btn" design="Default"> Statusboard </ui5-button>
+
+        <hr class="footer-hr" />
+        <div class="card-footer">
+          <div class="footer-left">
+            <ui5-icon name="employee"></ui5-icon>
+            <span>Terminal 1</span>
+          </div>
+          <ui5-icon class="img-viewer" name="image-viewer"></ui5-icon>
+        </div>
+      </section>
+      <section class="card card-m">
+        <ui5-card class="grid-item grid-item-1">
+          <div class="user-pill">
+            <ui5-icon name="play" class="play-icon"></ui5-icon>
+            <div class="user-text">
+              <div class="user">Md. Johel Ahmed Nishat</div>
+              <div class="user-role">Programming</div>
+            </div>
+          </div>
+          <div class="total-time">
+            <div class="entry-time">
+              <ui5-icon class="time-entry-request" name="time-entry-request"></ui5-icon>
+              <div class="time">
+                <div class="hours-title">Total Hours:</div>
+                <div class="hour">05:20:00</div>
+              </div>
+            </div>
+            <div class="weekly-time">
+              <ui5-icon disabled class="fob-watch" name="fob-watch"></ui5-icon>
+              <div class="time">
+                <div class="hours-title">Weekly Time:</div>
+                <div class="hour">24:12:21</div>
+              </div>
+            </div>
+          </div>
+        </ui5-card>
+        <ui5-card class="grid-item grid-item-2">
+          <div class="act-header">
+            <div class="user">Activity</div>
+            <div class="act-header-btn">
+              <ui5-button icon="play" class="start-btn" end-icon="navigation-down-arrow"
+                >Start</ui5-button
+              >
+              <ui5-menu opener="menuBtn" id="myMenu">
+                <ui5-menu-item text="Administration"></ui5-menu-item>
+                <ui5-menu-item text="Analysis"></ui5-menu-item>
+                <ui5-menu-item text="Documentation"></ui5-menu-item>
+                <ui5-menu-item text="Debugging"></ui5-menu-item>
+                <ui5-menu-item text="Meeting"></ui5-menu-item>
+                <ui5-menu-item text="No Task"></ui5-menu-item>
+                <ui5-menu-item text="Support"></ui5-menu-item>
+              </ui5-menu>
+              <ui5-button icon="stop" class="stop-btn">Stop</ui5-button>
+              <div class="refresh-icon">
+                <ui5-button icon="refresh"></ui5-button>
+              </div>
+            </div>
+          </div>
+          <hr class="hr" />
+          <div class="activity-details">
+            <div class="activity">Activity:</div>
+            <div class="act-details">
+              19262 - Update Client record in <br />
+              CRM to Live Server for AGVS
+            </div>
+          </div>
+          <div class="activity-details">
+            <div class="activity">Elapsed Time:</div>
+            <div class="act-time">02:24:34</div>
+          </div>
+        </ui5-card>
+
+        <ui5-card class="grid-item grid-item-3">
+          <div class="overdue-task">
+            <ui5-icon class="time-overdue" name="past"></ui5-icon>
+            <div class="overdue-num">13</div>
+          </div>
+          <div class="overdue-text">Today & Overdue Task</div>
+        </ui5-card>
+        <ui5-card class="grid-item grid-item-4">
+          <div class="ongoing-task">
+            <ui5-icon class="time-ongoing" name="time-entry-request"></ui5-icon>
+            <div class="ongoing-num">24</div>
+          </div>
+          <div class="ongoing-text">On going Task</div>
+        </ui5-card>
+        <ui5-card class="grid-item grid-item-5">
+          <div class="upcoming-task">
+            <ui5-icon class="time-upcoming" name="time-entry-request"></ui5-icon>
+            <div class="upcoming-num">12</div>
+          </div>
+          <div class="upcoming-text">Upcoming Task</div>
+        </ui5-card>
+
+        <ui5-card class="grid-item grid-item-6">
+          <ui5-card class="task-card">
+            <div class="task-header">
+              <span>On Going Task (25)</span>
+              <ui5-input placeholder="Search" icon="search" slot="icon" class="search"></ui5-input>
+            </div>
+
+            <div class="task-list">
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    15979 - Fix Issues noticed in Live System
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">07:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+              <!-- TWO ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19148 - BaseVisu | Users | Qualifications | Show qualifications in search even
+                    if article and machine are not set
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">15:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+              <!-- THREE ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    16519 - Configure Server Setup for Dietermann (Test and Live Server)
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">17:30<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+              <!-- FOUR ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    16519 - Configure Server Setup for Dietermann (Test and Live Server)
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">17:30<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    15979 - Fix Issues noticed in Live System
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">07:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon">
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19148 - BaseVisu | Users | Qualifications | Show qualifications in search even
+                    if article and machine are not set
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">15:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+            </div>
+          </ui5-card>
+        </ui5-card>
+
+        <ui5-card class="grid-item grid-item-7">
+          <ui5-card class="task-card">
+            <div class="task-header">
+              <span>Today & Overdue Task (25)</span>
+
+              <ui5-input placeholder="Search" class="search"></ui5-input>
+            </div>
+
+            <div class="task-list">
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19148 - BaseVisu | Users | Qualifications | Show qualifications in search even
+                    if article and machine are not set
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">15:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+
+              <!-- STOP ROW -->
+              <div class="task-row running">
+                <div class="task-icon red">
+                  <ui5-icon class="red-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19262 - Task Visu front end development
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="stop" class="stop-btn">Stop</ui5-button>
+
+                <div class="task-time">09:30<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19148 - BaseVisu | Users | Qualifications | Show qualifications in search even
+                    if article and machine are not set
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">21:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    19148 - BaseVisu | Users | Qualifications | Show qualifications in search even
+                    if article and machine are not set
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">17:30<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    15123 - Task Visu front end development
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">15:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+
+              <!-- ONE ROW -->
+              <div class="task-row active">
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
+                </div>
+
+                <div class="task-content">
+                  <ui5-title class="truncate-text task-sub-header" wrapping-type="None">
+                    16519 - Configure Server Setup for Dietermann (Test and Live Server)
+                  </ui5-title>
+                  <div class="task-meta">
+                    End Date: <span class="date">19.07.26, 12:44</span> &nbsp;&nbsp; Elapsed time:
+                    <span class="date">07:00</span> Hrs
+                  </div>
+                </div>
+
+                <ui5-button icon="play" class="start-btn">Start</ui5-button>
+
+                <div class="task-time">15:00<span class="date">Hrs</span></div>
+                <ui5-button icon="hint" class="hint-btn"></ui5-button>
+              </div>
+            </div>
+          </ui5-card>
+        </ui5-card>
+      </section>
+
+      <!-- section 3 -->
+      <section class="card sec-3">
+        <ui5-card class="task-details-card">
+          <!-- HEADER -->
+          <div class="card3-header">
+            <ui5-title level="H5">Task Details</ui5-title>
+            <ui5-button design="Transparent" icon="information"> Open Description </ui5-button>
+          </div>
+
+          <!-- DIVIDER (HTML, not ui5) -->
+          <div class="divider"></div>
+
+          <!-- INFO GRID -->
+          <div class="task-info-grid">
+            <div class="info-item">
+              <ui5-label>Operation</ui5-label>
+              <ui5-text class="truncate">
+                1668 - Shopfloorboard Design Webinterface | Shopfloor V12.0 | AGVS Aluminium Werke
+                GmbH Villingen
+              </ui5-text>
+            </div>
+
+            <div class="info-item">
+              <ui5-label>Progress:</ui5-label>
+               <ui5-slider value="20" min="0" max="100" step="5" show-tickmarks label-interval="2"></ui5-slider>
+            </div>
+          </div>
+          <div class="deta-info">
+            <div class="info-item">
+              <ui5-label>Customer Name</ui5-label>
+              <ui5-text>Theodor Scherer</ui5-text>
+            </div>
+
+            <div class="info-item">
+              <ui5-label>Prod Order</ui5-label>
+              <ui5-text>PR-0001</ui5-text>
+            </div>
+
+            <div class="info-item">
+              <ui5-label>Module</ui5-label>
+              <ui5-text>Planvisu</ui5-text>
+            </div>
+
+            <div class="info-item">
+              <ui5-label>Start Date</ui5-label>
+              <ui5-text>21.09.2025</ui5-text>
+            </div>
+
+            <div class="info-item">
+              <ui5-label>End Date</ui5-label>
+              <ui5-text>22.09.2025</ui5-text>
+            </div>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="description-section">
+            <ui5-label>Description:</ui5-label>
+
+            <!-- DIVIDER -->
+          <div class="divider"></div>
+            <div class="editor">
+               <ui5-segmented-button accessible-name="Font style"  design="Transparent">
+               <ui5-segmented-button-item tooltip="Undo" icon="undo"></ui5-segmented-button-item>
+              <ui5-segmented-button-item tooltip="Redo" icon="redo"></ui5-segmented-button-item>
+              </ui5-segmented-button>
+              <!-- <div class="divider-vr"></div> -->
+               <ui5-select design="Transparent">
+        <ui5-option >Desktop</ui5-option>
+        <ui5-option selected>Paragraph</ui5-option>
+        <ui5-option >Phone</ui5-option>
+    </ui5-select>
+              <ui5-segmented-button accessible-name="Font style"  design="Transparent">
+        <ui5-segmented-button-item tooltip="Bold" icon="bold-text"></ui5-segmented-button-item>
+        <ui5-segmented-button-item tooltip="Underline" icon="underline-text"></ui5-segmented-button-item>
+        <ui5-segmented-button-item tooltip="Italic" icon="italic-text"></ui5-segmented-button-item>
+    </ui5-segmented-button>
+            </div>
+            <div class="text-area">
+              <ui5-textarea
+              rows="22"
+              value="Abram Elias: This task focuses on analyzing  requirements and  implementing  the necessary design and functional updates improve overall system usability and clarity. The goal is to ensure the task aligns with business objectives while maintaining  with existing design standards and workflows.
+
+The work includes reviewing current screen  processes, identifying gaps or usability issues, and propose clear, user-friendly solutions. Coordination with stakehold and developers may required to validate assumptions,finalize specifications, and ensure smooth implementation within the defined timeline.
+
+ Here some point we discusses:
+
+• Support developers during implementation if clarification is needed
+• Analyze current workflow system behavior.
+">
+            </ui5-textarea>
+            </div>
+          </div>
+
+           <!-- DIVIDER -->
+          <div class="divider"></div>
+          <!-- FOOTER -->
+          <div class="save-btn">
+            <ui5-button design="Emphasized">Save</ui5-button>
+          </div>
+        </ui5-card>
+      </section>
+    </div>
+  </main>
+</body>

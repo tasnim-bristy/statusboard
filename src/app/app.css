@@ -1,0 +1,626 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sapFontFamily: "Roboto", "Segoe UI", Arial, sans-serif;
+  --sapBackgroundColor: #EAECEE;
+}
+
+body{
+  background-color: var(--sapBackgroundColor);
+  font-family: var(--sapFontFamily);
+  color: #1D2D3E;
+}
+
+/* ================= MAIN LAYOUT ================= */
+.main-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2.8fr;
+  gap: 12px;
+  min-height: 91vh;
+}
+
+.menu2{
+    color: #000;
+}
+
+/* ================= CARD BASE ================= */
+.card {
+  background-color: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  overflow: hidden;
+  color: #1D2D3E;
+}
+
+.sec-1,
+.sec-3{
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-content{
+  flex: 1;
+}
+
+.user-name{
+    font-size: 14px;
+    color: #0064D9;
+    font-weight: 600;
+}
+
+ui5-button{
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ================= BUTTON ================= */
+.statusboard-btn{
+  background-color: #EAECEE;
+  width: 232px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  margin: 12px auto;
+  font-size: 16px;
+  color: #0070F2;
+  transition: 0.3s;
+}
+
+.statusboard-btn:hover{
+  background-color: #0070F2;
+  color: #fff;
+}
+
+/* ================= FOOTER ================= */
+.card-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-top: auto;
+}
+
+.footer-left{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1D2D3E;
+}
+
+.img-viewer{
+  color: #0070F2;
+}
+
+.footer-hr {
+  border: none;        
+  height: 1px;         
+  background-color: #ccc; 
+  margin: 750px 0 0 0;      
+  width: 100%;         
+}
+
+/* ================= SECTION 2  ================= */
+.card-m {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  background-color: var(--sapBackgroundColor);
+}
+
+.grid-item {
+  background-color: #fff;
+  border-radius: 16px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* spans */
+.grid-item:nth-child(1),
+.grid-item:nth-child(2){
+  grid-column: span 3;
+}
+
+.grid-item:nth-child(3),
+.grid-item:nth-child(4),
+.grid-item:nth-child(5){
+  grid-column: span 2;
+}
+
+.grid-item:nth-child(6),
+.grid-item:nth-child(7){
+  grid-column: span 6;
+}
+
+.grid-item-1,
+.grid-item-2,
+.grid-item-3,
+.grid-item-4,
+.grid-item-5,
+.grid-item-6,
+.grid-item-7{
+  width: 100%;
+  height: auto;
+}
+
+.grid-item-3,
+.grid-item-4,
+.grid-item-5{
+  align-content: center;
+}
+
+/* ================= USER PILL ================= */
+.user-pill{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  margin: 12px auto;
+  max-width: 276px;
+  height: 56px;
+  background-color: #30914C;
+  border-radius: 8px;
+}
+
+.play-icon{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  color: #30914C;
+}
+
+ui5-icon.play-icon::part(root){
+  transform: scale(0.8);
+}
+
+.user-text{
+  color: #fff;
+  text-align: left;
+}
+
+.user-text .user{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.user-text .user-role{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* ================= TIME ================= */
+.total-time{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.entry-time,
+.weekly-time{
+  display: flex;
+  gap: 6px;
+}
+
+.time{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.hour{
+  font-weight: 700;
+}
+
+.time-entry-request{
+    color: #0064D9;
+    border: 1px solid #BCC3CA;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.time-entry-request:hover{
+    background-color: #EAECEE;
+}
+
+ui5-icon.time-entry-request::part(root) {
+  transform: scale(0.4);
+}
+
+.fob-watch{
+    color: #A8B3BD;
+}
+
+ui5-icon.fob-watch::part(root) {
+  transform: scale(1.2);
+}
+
+/* ================= ACTIVITY ================= */
+.act-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.act-header-btn{
+    display: flex;
+    gap: 4px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+.activity-details{
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 12px;
+}
+
+.activity {
+  font-size: 14px;
+  font-weight: 400;
+  color: #556B82;
+  flex-shrink: 0;
+}
+
+.act-details {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1D2D3E;
+  text-align: left;
+}
+
+.act-time{
+  font-size: 14px;
+  padding-left: 26px;
+  flex: 1;
+}
+
+.start-btn{
+  border: 1px solid #BCC3CA;
+}
+
+.stop-btn{
+  color: #AA0808;
+  background-color: #FFC1DF;
+}
+
+/* ================= TASK LIST ================= */
+.overdue-task{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-overdue{
+  color: #BA066C;
+  background: #FFDBE7;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+ui5-icon.time-overdue::part(root) {
+  transform: scale(0.6);
+}
+
+.overdue-num{
+  color: #AA0808;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.overdue-text{
+  font-size: 16px;
+  font-weight: 400;
+  color: #1D2D3E;
+  padding-top: 8px;
+}
+
+.ongoing-task{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-ongoing{
+  color: #A45D00;
+  background: #FFF3B8;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+ui5-icon.time-ongoing::part(root) {
+  transform: scale(0.6);
+}
+
+.ongoing-num{
+  color: #A45D00;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.ongoing-text{
+  font-size: 16px;
+  font-weight: 400;
+  color: #1D2D3E;
+  padding-top: 8px;
+}
+
+.upcoming-task{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-upcoming{
+  color: #256F3A;
+  background: #EBF5CB;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+ui5-icon.time-upcoming::part(root) {
+  transform: scale(0.6);
+}
+
+.upcoming-num{
+  color: #256F3A;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.upcoming-text{
+  font-size: 16px;
+  font-weight: 400;
+  color: #1D2D3E;
+  padding-top: 8px;
+}
+
+.task-card {
+  padding: 0;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  height: 44px;
+  border-bottom: 1px solid #ccc;
+}
+
+.task-header span{
+  padding: 12px 16px;
+}
+
+.search {
+  margin: 4px 16px;
+  width: 220px;
+  height: 36px;
+}
+
+.task-list{
+  max-height: 215px;
+  overflow-y: auto;
+}
+
+.task-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.task-row.active {
+  background: #fff;
+}
+
+.task-row.running{
+  background: #EBF8FF;
+}
+
+.task-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint-btn{
+  color: #0064D9;
+  background: none;
+}
+
+.task-icon {
+  background: #FFF3B8;
+}
+
+.task-time-icon{
+  color: #A45D00;
+}
+
+.task-content {
+  flex: 1;
+  text-align: left;
+  min-width: 0; 
+}
+
+.task-meta {
+  font-size: 14px;
+  color: #556B82;
+  font-weight: 400;
+}
+
+.date{
+  color: #1D2D3E;
+}
+
+.task-time {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1D2D3E;
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.task-time span{
+  color: #556B82;
+}
+
+.task-sub-header::part(root) {
+  font-size: 14px;
+  font-weight: 400 !important;       
+  color: #1D2D3E;
+  text-align: left;
+  white-space: nowrap;     
+  overflow: hidden;        
+  text-overflow: ellipsis; 
+  max-width: 300px;        
+}
+
+.task-content{
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.truncate-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.blue {
+  background: #D1EFFF;
+}
+
+.blue-icon{
+  color: #0057D2;
+}
+
+.red {
+  background: #FFDBE7;
+}
+
+.red-icon{
+  color: #BA066C;
+}
+
+/* ================= SECTION 3 ================= */
+.card3-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px 0;
+}
+
+.card3-header ui5-button{
+  border: 1px solid #ccc;
+}
+
+.divider {
+  height: 1px;
+  background: #ccc;
+  margin: 1px 0;
+}
+
+.task-info-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 12px;
+}
+
+.deta-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.task-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 12px;
+}
+
+.deta-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.truncate::part(root) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description-section {
+  padding: 16px;
+}
+
+.editor{
+  padding-bottom: 6px;
+}
+
+/* ================= TEXTAREA ================= */
+.text-area{
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #EAECEE;
+}
+
+ui5-textarea{
+  width: 100%;
+  max-width: 500px;
+  min-height: 500px;
+  margin: 10px;
+  text-align: center;
+}
+
+.save-btn {
+  padding: 8px 16px ;
+  display: flex;
+  justify-content: flex-end;
+}
