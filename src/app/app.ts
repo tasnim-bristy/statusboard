@@ -1,5 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, AfterViewInit, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Machine } from './machines/machine';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,20 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class App implements AfterViewInit {
+export class App implements AfterViewInit, OnInit {
   protected readonly title = signal('Statusboard');
+  machineList: any[] = []; // Machine array
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private machineMachines: Machine
+  ) {}
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return; // Only run in browser
 
     const menuButton = document.getElementById('menuButton') as HTMLElement | null;
     const myMenu = document.getElementById('myMenu') as HTMLElement | null;
-
     if (!menuButton || !myMenu) return;
 
     type UI5ButtonElement = HTMLElement & { accessibilityAttributes: any };
@@ -40,12 +44,7 @@ export class App implements AfterViewInit {
 
     menuBtn.addEventListener('click', () => openMenu(menuEl, menuBtn));
     menuBtn.addEventListener('keydown', (event: KeyboardEvent) => {
-      const F4Key =
-        !event.altKey &&
-        !event.shiftKey &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        event.key === 'F4';
+      const F4Key = !event.altKey && !event.shiftKey && !event.metaKey && !event.ctrlKey && event.key === 'F4';
       const AltArrowDownKey = event.altKey && event.key === 'ArrowDown';
       const AltArrowUpKey = event.altKey && event.key === 'ArrowUp';
 
@@ -55,5 +54,12 @@ export class App implements AfterViewInit {
     });
 
     menuEl.addEventListener('close', () => closeMenu(menuBtn));
+  }
+
+  ngOnInit() {
+    this.machineMachines.getMachineList().subscribe((data: any) => {
+      console.log(data);
+      this.machineList = data.value; 
+    });
   }
 }

@@ -1,0 +1,15 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Machine {
+  constructor(private http:HttpClient){
+  
+  }
+  getMachineList(){
+    const url="http://shopfloor.test.local/odata/Machines";
+    return this.http.get(url);
+  }
+}
