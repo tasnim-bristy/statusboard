@@ -9,7 +9,7 @@ export class Machine {
   
   }
   getMachineList(){
-    const url="http://shopfloor.test.local/odata/Machines";
-    return this.http.get(url);
+    const url="http://shopfloor.test.local/odata/ProdOrderPosOperations?$select=id,name,start";
+    return this.http.get<any>(url);
   }
 }

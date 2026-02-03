@@ -22,7 +22,7 @@ body{
   display: grid;
   grid-template-columns: 1fr 2fr 2.8fr;
   gap: 12px;
-  min-height: 91vh;
+  min-height: 90vh;
 }
 
 .menu2{
@@ -518,6 +518,17 @@ ui5-icon.time-upcoming::part(root) {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 300px;
+}
+
+.title-header{
+  color: #1D2D3E;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.title-para{
+  color: #556B82;
+  font-size: 13px;
 }
 
 .blue {
