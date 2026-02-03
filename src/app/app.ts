@@ -9,6 +9,7 @@ import {
   computed,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import moment from 'moment';
 import { Machine } from './machines/machine';
 
 interface UI5InputEvent extends Event {
@@ -100,4 +101,42 @@ export class App implements AfterViewInit, OnInit {
     const ui5Event = event as UI5InputEvent;
     this.searchText.set(ui5Event.detail.value);
   }
+
+  getFormattedDate(date?: string): string {
+  if (!date) return '';
+  return moment.utc(date).local().format('DD.MM.YY, hh:mm');
+}
+
+getElapsedTime(start?: string): string {
+  if (!start) return '00:00 Hrs';
+
+  const startMoment = moment(start);
+  const now = moment();
+
+  // Only time part, same day
+  const startTime = moment({
+    hour: startMoment.hour(),
+    minute: startMoment.minute(),
+  });
+
+  const nowTime = moment({
+    hour: now.hour(),
+    minute: now.minute(),
+  });
+
+  let diffMinutes = nowTime.diff(startTime, 'minutes');
+
+  if (diffMinutes < 0) diffMinutes = 0;
+
+  const hours = Math.floor(diffMinutes / 60);
+  const minutes = diffMinutes % 60;
+
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} Hrs`;
+}
+
+getStartTime(date?: string): string {
+  if (!date) return '00:00 Hrs';
+  return moment.utc(date).local().format('HH:mm') + 'Hrs';
+}
+
 }

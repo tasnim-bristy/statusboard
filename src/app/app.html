@@ -150,17 +150,35 @@
             <div class="task-list">
               <div class="task-row active" *ngFor="let machine of firstTableMachines()">
                 <div class="task-icon">
-                  <ui5-icon name="time-account"></ui5-icon>
+                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
                 </div>
 
                 <div class="task-content">
-                  <ui5-title wrapping-type="None"><ul>
-                    <li class="truncate-text"><ui5-text class="title-header">{{ machine.name }}</ui5-text></li>
-                    <li><ui5-text class="title-para">{{ machine.start }}</ui5-text></li>
-                  </ul> </ui5-title>
+                  <ui5-title wrapping-type="None"
+                    ><ul>
+                      <li>
+                        <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
+                      </li>
+                      <li>
+                        <ui5-text class="title-para">
+                          End Date: <span>{{ getFormattedDate(machine.start) }}</span>  Elapsed Time:
+                          <span>{{ getElapsedTime(machine.start) }}</span>
+                        </ui5-text>
+                      </li>
+                    </ul>
+                  </ui5-title>
                 </div>
 
                 <ui5-button icon="play" class="start-btn"> Start </ui5-button>
+                <ui5-title wrapping-type="None"
+                    ><ul>
+                      <li>
+                        <ui5-text class="title-para">
+                          <span>{{ getStartTime(machine.start) }}</span>
+                        </ui5-text>
+                      </li>
+                    </ul>
+                  </ui5-title>
                 <ui5-button icon="hint" class="hint-btn"></ui5-button>
               </div>
             </div>
@@ -182,18 +200,36 @@
 
             <div class="task-list">
               <div class="task-row active" *ngFor="let machine of secondTableMachines()">
-                <div class="task-icon">
-                  <ui5-icon name="time-account"></ui5-icon>
+                <div class="task-icon blue">
+                  <ui5-icon class="blue-icon" name="time-account"></ui5-icon>
                 </div>
 
                 <div class="task-content">
-                  <ui5-title wrapping-type="None"> <ul>
-                    <li class="truncate-text"><ui5-text class="title-header">{{ machine.name }}</ui5-text></li>
-                    <li><ui5-text class="title-para">{{ machine.start }}</ui5-text></li>
-                  </ul></ui5-title>
+                  <ui5-title wrapping-type="None">
+                    <ul>
+                      <li>
+                        <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
+                      </li>
+                      <li>
+                        <ui5-text class="title-para">
+                          End Date:  <span>{{ getFormattedDate(machine.start) }}</span>  Elapsed Time:
+                          <span>{{ getElapsedTime(machine.start) }}</span>
+                        </ui5-text>
+                      </li>
+                    </ul></ui5-title
+                  >
                 </div>
 
                 <ui5-button icon="play" class="start-btn"> Start </ui5-button>
+                <ui5-title wrapping-type="None"
+                    ><ul>
+                      <li>
+                        <ui5-text class="title-para">
+                          <span>{{ getStartTime(machine.start) }}</span>
+                        </ui5-text>
+                      </li>
+                    </ul>
+                  </ui5-title>
                 <ui5-button icon="hint" class="hint-btn"></ui5-button>
               </div>
             </div>

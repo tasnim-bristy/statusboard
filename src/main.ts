@@ -53,8 +53,6 @@ import "@ui5/webcomponents-icons/dist/italic-text.js";
 import "@ui5/webcomponents-icons/dist/undo.js";
 import "@ui5/webcomponents-icons/dist/redo.js";
 
-
-
 bootstrapApplication(App, {
   providers: [
     provideRouter([])
