@@ -63,12 +63,13 @@ ui5-button {
 
 /* ================= BUTTON ================= */
 .statusboard-btn {
+  box-sizing: border-box;
   background-color: #eaecee;
-  width: 232px;
+  width: calc(100% - 24px);
   height: 50px;
   border-radius: 8px;
   border: none;
-  margin: 12px auto;
+  margin: 12px;
   font-size: 16px;
   color: #0070f2;
   transition: 0.3s;
@@ -424,7 +425,7 @@ ui5-icon.time-upcoming::part(root) {
 }
 
 .task-list {
-  max-height: 215px;
+  max-height: 240px;
   overflow-y: auto;
 }
 
@@ -510,12 +511,24 @@ ui5-icon.time-upcoming::part(root) {
   text-align: left;
 }
 
+.task-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.task-content li {
+  width: 100%; 
+}
+
 .truncate-text {
+  display: inline-block; 
+  max-width: 100%;       
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 300px;
 }
+
 
 .title-header {
   color: #1d2d3e;
@@ -553,7 +566,7 @@ ui5-icon.time-upcoming::part(root) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 12px 0;
+  padding: 4px 8px 3px 16px;
 }
 
 .card3-header ui5-button {
@@ -626,7 +639,7 @@ ui5-icon.time-upcoming::part(root) {
 ui5-textarea {  
   width: 100%;
   max-width: 500px;
-  min-height: 500px;
+  min-height: 510px;
   margin: 10px;
   text-align: center;
 }
