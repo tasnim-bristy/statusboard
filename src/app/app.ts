@@ -11,11 +11,11 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import moment from 'moment';
 import { Machine } from './machines/machine';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormsModule } from '@angular/forms';
 
 interface UI5InputEvent extends Event {
-  detail: {
-    value: string;
-  };
+  detail: { value: string };
 }
 
 @Component({
@@ -23,17 +23,36 @@ interface UI5InputEvent extends Event {
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, CKEditorModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App implements AfterViewInit, OnInit {
+  // Signals
   protected readonly title = signal('Statusboard');
-  machineList = signal<any[]>([]); // Machine array
+  machineList = signal<any[]>([]);
+  searchText = signal('');
+
+  // CKEditor
+  public Editor: any = null;
+ public data: string = `Abram Elias: This task focuses on analyzing requirements and implementing the <br> necessary design and functional updates to improve overall system usability and clarity. <br> The goal is to ensure the task aligns with business objectives while maintaining with <br> existing design standards and workflows.<br> <br> The work includes reviewing current screen processes, identifying gaps or usability <br> issues, and proposing clear, user-friendly solutions. Coordination with stakeholders and <br> developers may be required to validate assumptions, finalize specifications, and ensure <br> smooth implementation within the defined timeline.<br> <br> Here are some points we discussed: <br> <br> • Support developers during implementation if clarification is needed <br> • Analyze current workflow system behavior.` ;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private machineMachines: Machine,
   ) {}
+
+  // Browser-only CKEditor load + API fetch
+  async ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const ClassicEditor = await import('@ckeditor/ckeditor5-build-classic');
+      this.Editor = ClassicEditor.default;
+    }
+
+    // Fetch machine list
+    this.machineMachines.getMachineList().subscribe((data: any) => {
+      this.machineList.set(data.value || []);
+    });
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return; // Only run in browser
@@ -74,69 +93,49 @@ export class App implements AfterViewInit, OnInit {
     menuEl.addEventListener('close', () => closeMenu(menuBtn));
   }
 
-  ngOnInit() {
-    this.machineMachines.getMachineList().subscribe((data: any) => {
-      console.log(data);
-      this.machineList.set(data.value || []);
-    });
-  }
+  // Computed machine lists
   filteredMachineList = computed(() => {
-    if (!this.searchText()) {
-      return this.machineList();
-    }
+    if (!this.searchText()) return this.machineList();
     return this.machineList().filter((machine) =>
       machine.Name?.toLowerCase().includes(this.searchText().toLowerCase()),
     );
   });
 
-  firstTableMachines = computed(() => {
-    return this.filteredMachineList().slice(1, 40);
-  });
+  firstTableMachines = computed(() => this.filteredMachineList().slice(0, 40));
+  secondTableMachines = computed(() => this.filteredMachineList().slice(40, 80));
 
-  secondTableMachines = computed(() => {
-    return this.filteredMachineList().slice(40, 80);
-  });
-  searchText = signal('');
+  // Search input
   onSearchInput(event: Event) {
     const ui5Event = event as UI5InputEvent;
     this.searchText.set(ui5Event.detail.value);
   }
 
+  // Date & time helpers
   getFormattedDate(date?: string): string {
-  if (!date) return '';
-  return moment.utc(date).local().format('DD.MM.YY, hh:mm');
-}
+    if (!date) return '';
+    return moment.utc(date).local().format('DD.MM.YY, hh:mm');
+  }
 
-getElapsedTime(start?: string): string {
-  if (!start) return '00:00 Hrs';
+  getElapsedTime(start?: string): string {
+    if (!start) return '00:00 Hrs';
 
-  const startMoment = moment(start);
-  const now = moment();
+    const startMoment = moment(start);
+    const now = moment();
 
-  // Only time part, same day
-  const startTime = moment({
-    hour: startMoment.hour(),
-    minute: startMoment.minute(),
-  });
+    const startTime = moment({ hour: startMoment.hour(), minute: startMoment.minute() });
+    const nowTime = moment({ hour: now.hour(), minute: now.minute() });
 
-  const nowTime = moment({
-    hour: now.hour(),
-    minute: now.minute(),
-  });
+    let diffMinutes = nowTime.diff(startTime, 'minutes');
+    if (diffMinutes < 0) diffMinutes = 0;
 
-  let diffMinutes = nowTime.diff(startTime, 'minutes');
+    const hours = Math.floor(diffMinutes / 60);
+    const minutes = diffMinutes % 60;
 
-  if (diffMinutes < 0) diffMinutes = 0;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} Hrs`;
+  }
 
-  const hours = Math.floor(diffMinutes / 60);
-  const minutes = diffMinutes % 60;
-
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} Hrs`;
-}
-
-getStartTime(date?: string): string {
-  if (!date) return '00:00 Hrs';
-  return moment.utc(date).local().format('HH:mm') + 'Hrs';
-}
-
+  getStartTime(date?: string): string {
+    if (!date) return '00:00 Hrs';
+    return moment.utc(date).local().format('HH:mm') + 'Hrs';
+  }
 }

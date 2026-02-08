@@ -158,6 +158,7 @@ ui5-button {
 .grid-item-4,
 .grid-item-5 {
   align-content: center;
+  padding: 23px 0;
 }
 
 /* ================= USER PILL ================= */
@@ -214,6 +215,7 @@ ui5-icon.play-icon::part(root) {
 .weekly-time {
   display: flex;
   gap: 6px;
+  text-align: left;
 }
 
 .time {
@@ -269,7 +271,7 @@ ui5-icon.fob-watch::part(root) {
 .activity-details {
   display: flex;
   justify-content: space-between;
-  margin: 8px 12px;
+  margin: 8px 12px 0 12px;
 }
 
 .activity {
@@ -288,8 +290,9 @@ ui5-icon.fob-watch::part(root) {
 
 .act-time {
   font-size: 14px;
-  padding-left: 26px;
+  padding-left: 12px;
   flex: 1;
+  text-align: left;
 }
 
 .start-btn {
@@ -425,7 +428,7 @@ ui5-icon.time-upcoming::part(root) {
 }
 
 .task-list {
-  max-height: 240px;
+  max-height: 220px;
   overflow-y: auto;
 }
 
@@ -597,7 +600,7 @@ ui5-icon.time-upcoming::part(root) {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  padding: 0 12px;
+  padding: 16px 12px;
 }
 
 .deta-info {
@@ -628,11 +631,10 @@ ui5-icon.time-upcoming::part(root) {
 }
 
 /* ================= TEXTAREA ================= */
-.text-area {
+/* .text-area {
   display: flex;
   justify-content: center;
   padding: 8px;
-  border: 1px solid #ccc;
   background-color: #eaecee;
 }
 
@@ -642,10 +644,23 @@ ui5-textarea {
   min-height: 510px;
   margin: 10px;
   text-align: center;
+} */
+
+::ng-deep .ck-editor__editable_inline {
+  min-height: 520px;        
+  padding: 120px 20px 20px 20px;             
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  text-align: justify;
+}
+
+::ng-deep .ck-editor__top {
+  margin-bottom: 0;                          
 }
 
 .save-btn {
-  padding: 8px 16px;
+  padding: 9px 16px;
   display: flex;
   justify-content: flex-end;
 }

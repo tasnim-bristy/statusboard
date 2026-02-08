@@ -43,10 +43,10 @@
 
         <hr class="footer-hr" />
         <div class="card-footer">
-          <div class="footer-left">
+          <footer class="footer-left">
             <ui5-icon name="employee"></ui5-icon>
             <span>Terminal 1</span>
-          </div>
+          </footer>
           <ui5-icon class="img-viewer" name="image-viewer"></ui5-icon>
         </div>
       </section>
@@ -138,7 +138,7 @@
         <ui5-card class="grid-item grid-item-6">
           <ui5-card class="task-card">
             <div class="task-header">
-              <span>Today & Overdue Task (25)</span>
+              <span>On Going Task (25)</span>
 
               <ui5-input
                 placeholder="Search"
@@ -161,7 +161,7 @@
                       </li>
                       <li>
                         <ui5-text class="title-para">
-                          End Date: <span>{{ getFormattedDate(machine.start) }}</span>  Elapsed Time:
+                          End Date: <span>{{ getFormattedDate(machine.start) }}</span> Elapsed Time:
                           <span>{{ getElapsedTime(machine.start) }}</span>
                         </ui5-text>
                       </li>
@@ -171,14 +171,14 @@
 
                 <ui5-button icon="play" class="start-btn"> Start </ui5-button>
                 <ui5-title wrapping-type="None"
-                    ><ul>
-                      <li>
-                        <ui5-text class="title-para">
-                          <span>{{ getStartTime(machine.start) }}</span>
-                        </ui5-text>
-                      </li>
-                    </ul>
-                  </ui5-title>
+                  ><ul>
+                    <li>
+                      <ui5-text class="title-para">
+                        <span>{{ getStartTime(machine.start) }}</span>
+                      </ui5-text>
+                    </li>
+                  </ul>
+                </ui5-title>
                 <ui5-button icon="hint" class="hint-btn"></ui5-button>
               </div>
             </div>
@@ -194,7 +194,7 @@
               <ui5-input
                 placeholder="Search"
                 class="search"
-                [value]="searchText()" 
+                [value]="searchText()"
                 (input)="onSearchInput($event)"
               ></ui5-input>
             </div>
@@ -213,7 +213,7 @@
                       </li>
                       <li>
                         <ui5-text class="title-para">
-                          End Date:  <span>{{ getFormattedDate(machine.start) }}</span>  Elapsed Time:
+                          End Date: <span>{{ getFormattedDate(machine.start) }}</span> Elapsed Time:
                           <span>{{ getElapsedTime(machine.start) }}</span>
                         </ui5-text>
                       </li>
@@ -223,14 +223,14 @@
 
                 <ui5-button icon="play" class="start-btn"> Start </ui5-button>
                 <ui5-title wrapping-type="None"
-                    ><ul>
-                      <li>
-                        <ui5-text class="title-para">
-                          <span>{{ getStartTime(machine.start) }}</span>
-                        </ui5-text>
-                      </li>
-                    </ul>
-                  </ui5-title>
+                  ><ul>
+                    <li>
+                      <ui5-text class="title-para">
+                        <span>{{ getStartTime(machine.start) }}</span>
+                      </ui5-text>
+                    </li>
+                  </ul>
+                </ui5-title>
                 <ui5-button icon="hint" class="hint-btn"></ui5-button>
               </div>
             </div>
@@ -303,58 +303,14 @@
           <!-- DESCRIPTION -->
           <div class="description-section">
             <ui5-label>Description:</ui5-label>
-
-            <!-- DIVIDER -->
-            <div class="divider"></div>
-            <div class="editor">
-              <ui5-segmented-button accessible-name="Font style" design="Transparent">
-                <ui5-segmented-button-item tooltip="Undo" icon="undo"></ui5-segmented-button-item>
-                <ui5-segmented-button-item tooltip="Redo" icon="redo"></ui5-segmented-button-item>
-              </ui5-segmented-button>
-              <!-- <div class="divider-vr"></div> -->
-              <ui5-select design="Transparent">
-                <ui5-option>Desktop</ui5-option>
-                <ui5-option selected>Paragraph</ui5-option>
-                <ui5-option>Phone</ui5-option>
-              </ui5-select>
-              <ui5-segmented-button accessible-name="Font style" design="Transparent">
-                <ui5-segmented-button-item
-                  tooltip="Bold"
-                  icon="bold-text"
-                ></ui5-segmented-button-item>
-                <ui5-segmented-button-item
-                  tooltip="Underline"
-                  icon="underline-text"
-                ></ui5-segmented-button-item>
-                <ui5-segmented-button-item
-                  tooltip="Italic"
-                  icon="italic-text"
-                ></ui5-segmented-button-item>
-              </ui5-segmented-button>
-            </div>
-            <div class="text-area">
-              <ui5-textarea
-                rows="22"
-                value="Abram Elias: This task focuses on analyzing  requirements and  implementing  the necessary design and functional updates improve overall system usability and clarity. The goal is to ensure the task aligns with business objectives while maintaining  with existing design standards and workflows.
-
-The work includes reviewing current screen  processes, identifying gaps or usability issues, and propose clear, user-friendly solutions. Coordination with stakehold and developers may required to validate assumptions,finalize specifications, and ensure smooth implementation within the defined timeline.
-
- Here some point we discusses:
-
-• Support developers during implementation if clarification is needed
-• Analyze current workflow system behavior.
-"
-              >
-              </ui5-textarea>
-            </div>
+            <ckeditor *ngIf="Editor" [editor]="Editor" [(ngModel)]="data"> </ckeditor>
           </div>
-
           <!-- DIVIDER -->
           <div class="divider"></div>
           <!-- FOOTER -->
-          <div class="save-btn">
+          <footer class="save-btn">
             <ui5-button design="Emphasized">Save</ui5-button>
-          </div>
+          </footer>
         </ui5-card>
       </section>
     </div>
