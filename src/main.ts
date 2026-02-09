@@ -52,6 +52,8 @@ import "@ui5/webcomponents-icons/dist/underline-text.js";
 import "@ui5/webcomponents-icons/dist/italic-text.js";
 import "@ui5/webcomponents-icons/dist/undo.js";
 import "@ui5/webcomponents-icons/dist/redo.js";
+import "@ui5/webcomponents-icons/dist/future.js";
+import "@ui5/webcomponents-icons/dist/pending.js";
 
 bootstrapApplication(App, {
   providers: [

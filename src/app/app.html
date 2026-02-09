@@ -53,11 +53,7 @@
       <section class="card card-m">
         <ui5-card class="grid-item grid-item-1">
           <div class="user-pill">
-            <ui5-icon name="play" class="play-icon"></ui5-icon>
-            <div class="user-text">
-              <div class="user">Md. Johel Ahmed Nishat</div>
-              <div class="user-role">Programming</div>
-            </div>
+            <ui5-button class="user-text" icon="play"> Md. Johel Ahmed Nishat <br> <span>Programming</span> </ui5-button>
           </div>
           <div class="total-time">
             <div class="entry-time">
@@ -102,7 +98,7 @@
           <div class="activity-details">
             <div class="activity">Activity:</div>
             <div class="act-details">
-              19262 - Update Client record in <br />
+              19262 - Update Client record in
               CRM to Live Server for AGVS
             </div>
           </div>
@@ -121,14 +117,14 @@
         </ui5-card>
         <ui5-card class="grid-item grid-item-4">
           <div class="ongoing-task">
-            <ui5-icon class="time-ongoing" name="time-entry-request"></ui5-icon>
+            <ui5-icon class="time-ongoing" name="pending"></ui5-icon>
             <div class="ongoing-num">24</div>
           </div>
           <div class="ongoing-text">On going Task</div>
         </ui5-card>
         <ui5-card class="grid-item grid-item-5">
           <div class="upcoming-task">
-            <ui5-icon class="time-upcoming" name="time-entry-request"></ui5-icon>
+            <ui5-icon class="time-upcoming" name="future"></ui5-icon>
             <div class="upcoming-num">12</div>
           </div>
           <div class="upcoming-text">Upcoming Task</div>
@@ -150,7 +146,7 @@
             <div class="task-list">
               <div class="task-row active" *ngFor="let machine of firstTableMachines()">
                 <div class="task-icon">
-                  <ui5-icon class="task-time-icon" name="time-account"></ui5-icon>
+                  <ui5-icon class="task-time-icon" name="pending"></ui5-icon>
                 </div>
 
                 <div class="task-content">
@@ -303,7 +299,8 @@
           <!-- DESCRIPTION -->
           <div class="description-section">
             <ui5-label>Description:</ui5-label>
-            <ckeditor *ngIf="Editor" [editor]="Editor" [(ngModel)]="data"> </ckeditor>
+            <ckeditor *ngIf="Editor" [editor]="Editor"> </ckeditor> 
+            <!-- [(ngModel)]="data" -->
           </div>
           <!-- DIVIDER -->
           <div class="divider"></div>
