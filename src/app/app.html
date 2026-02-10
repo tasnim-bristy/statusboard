@@ -38,22 +38,28 @@
   <!-- main -->
   <main style="padding: 12px">
     <div class="main-section">
-      <section class="card sec-1">
-        <ui5-button class="statusboard-btn" design="Default"> Statusboard </ui5-button>
-
-        <hr class="footer-hr" />
-        <div class="card-footer">
-          <footer class="footer-left">
-            <ui5-icon name="employee"></ui5-icon>
-            <span>Terminal 1</span>
-          </footer>
-          <ui5-icon class="img-viewer" name="image-viewer"></ui5-icon>
-        </div>
-      </section>
+      <ui5-side-navigation >
+        <ui5-side-navigation-item
+          class="statusboard-btn"
+          text="Statusboard"
+          icon=""
+        ></ui5-side-navigation-item>
+        <ui5-side-navigation-item
+          slot="fixedItems"
+          text="Terminal 1"
+          expanded
+          icon="image-viewer"
+          unselectable
+        >
+        </ui5-side-navigation-item>
+      </ui5-side-navigation>
       <section class="card card-m">
         <ui5-card class="grid-item grid-item-1">
           <div class="user-pill">
-            <ui5-button class="user-text" icon="play"> Md. Johel Ahmed Nishat <br> <span>Programming</span> </ui5-button>
+            <ui5-button class="user-text" icon="play">
+              Md. Johel Ahmed Nishat <br />
+              <span>Programming</span>
+            </ui5-button>
           </div>
           <div class="total-time">
             <div class="entry-time">
@@ -76,9 +82,7 @@
           <div class="act-header">
             <div class="user">Activity</div>
             <div class="act-header-btn">
-              <ui5-button icon="play" class="start-btn" end-icon="navigation-down-arrow"
-                >Start</ui5-button
-              >
+              <ui5-button icon="play" class="start-btn">Start</ui5-button>
               <ui5-menu opener="menuBtn" id="myMenu">
                 <ui5-menu-item text="Administration"></ui5-menu-item>
                 <ui5-menu-item text="Analysis"></ui5-menu-item>
@@ -98,8 +102,7 @@
           <div class="activity-details">
             <div class="activity">Activity:</div>
             <div class="act-details">
-              19262 - Update Client record in
-              CRM to Live Server for AGVS
+              19262 - Update Client record in CRM to Live Server for AGVS
             </div>
           </div>
           <div class="activity-details">
@@ -299,7 +302,7 @@
           <!-- DESCRIPTION -->
           <div class="description-section">
             <ui5-label>Description:</ui5-label>
-            <ckeditor *ngIf="Editor" [editor]="Editor"> </ckeditor> 
+            <ckeditor *ngIf="Editor" [editor]="Editor"> </ckeditor>
             <!-- [(ngModel)]="data" -->
           </div>
           <!-- DIVIDER -->

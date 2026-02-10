@@ -12,6 +12,9 @@ import "@ui5/webcomponents-icons/dist/menu2.js";
 
 import "@ui5/webcomponents/dist/Select.js";
 import "@ui5/webcomponents/dist/Option.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigation.js";
 
 import "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
