@@ -19,26 +19,29 @@
     <div slot="endContent" style="display: flex; align-items: center; gap: 10px">
       <!-- Date picker + text -->
       <div style="display: flex; align-items: center; gap: 5px">
-        <ui5-datetime-picker class="dtp"></ui5-datetime-picker>
-        <span class="user-name">Elias Abram</span>
+        <ui5-icon class="dtp" name="date-time"></ui5-icon>
+        <ui5-text class="dtp">{{ currentTime }}</ui5-text>
+        <div class="divider"></div>
+        <ui5-text class="user-name">Elias Abram</ui5-text>
       </div>
 
       <!-- Logout button -->
       <ui5-button tooltip="Logout">Logout</ui5-button>
 
       <!-- Language selector -->
-      <ui5-select style="width: 5px">
-        <ui5-option value="en" selected>EN</ui5-option>
-        <ui5-option value="de">GE</ui5-option>
-        <ui5-option value="bg">BG</ui5-option>
-      </ui5-select>
+      <ui5-button #btnOpenBasic end-icon="slim-arrow-down" (click)="openMenu()"> EN </ui5-button>
+
+      <ui5-menu #menuBasic header-text="Basic Menu with Items">
+        <ui5-menu-item text="GE"></ui5-menu-item>
+        <ui5-menu-item text="BG"></ui5-menu-item>
+      </ui5-menu>
     </div>
   </ui5-bar>
 
   <!-- main -->
   <main style="padding: 12px">
     <div class="main-section">
-      <ui5-side-navigation >
+      <ui5-side-navigation>
         <ui5-side-navigation-item
           class="statusboard-btn"
           text="Statusboard"
@@ -65,15 +68,15 @@
             <div class="entry-time">
               <ui5-icon class="time-entry-request" name="time-entry-request"></ui5-icon>
               <div class="time">
-                <div class="hours-title">Total Hours:</div>
-                <div class="hour">05:20:00</div>
+                <ui5-text class="hours-title">Total Hours:</ui5-text>
+                <ui5-text class="hour">05:20:00</ui5-text>
               </div>
             </div>
             <div class="weekly-time">
               <ui5-icon disabled class="fob-watch" name="fob-watch"></ui5-icon>
               <div class="time">
-                <div class="hours-title">Weekly Time:</div>
-                <div class="hour">24:12:21</div>
+                <ui5-text class="hours-title">Weekly Time:</ui5-text>
+                <ui5-text class="hour">24:12:21</ui5-text>
               </div>
             </div>
           </div>
@@ -82,7 +85,9 @@
           <div class="act-header">
             <div class="user">Activity</div>
             <div class="act-header-btn">
-              <ui5-button icon="play" class="start-btn">Start</ui5-button>
+              <ui5-button icon="play" class="start-btn" end-icon="slim-arrow-down"
+                >Start</ui5-button
+              >
               <ui5-menu opener="menuBtn" id="myMenu">
                 <ui5-menu-item text="Administration"></ui5-menu-item>
                 <ui5-menu-item text="Analysis"></ui5-menu-item>
@@ -98,53 +103,55 @@
               </div>
             </div>
           </div>
-          <hr class="hr" />
+          <ui5-menu-separator></ui5-menu-separator>
           <div class="activity-details">
-            <div class="activity">Activity:</div>
-            <div class="act-details">
-              19262 - Update Client record in CRM to Live Server for AGVS
-            </div>
+            <ui5-text class="activity">Activity:</ui5-text>
+            <ui5-text class="act-details"
+              >19262 - Update Client record in CRM to Live Server for AGVS</ui5-text
+            >
           </div>
           <div class="activity-details">
-            <div class="activity">Elapsed Time:</div>
-            <div class="act-time">02:24:34</div>
+            <ui5-text class="activity">Elapsed Time:</ui5-text>
+            <ui5-text class="act-time">02:24:34</ui5-text>
           </div>
         </ui5-card>
 
         <ui5-card class="grid-item grid-item-3">
           <div class="overdue-task">
             <ui5-icon class="time-overdue" name="past"></ui5-icon>
-            <div class="overdue-num">13</div>
+            <ui5-text class="overdue-num">13</ui5-text>
           </div>
-          <div class="overdue-text">Today & Overdue Task</div>
+          <ui5-text class="overdue-text">Today & Overdue Task</ui5-text>
         </ui5-card>
         <ui5-card class="grid-item grid-item-4">
           <div class="ongoing-task">
             <ui5-icon class="time-ongoing" name="pending"></ui5-icon>
-            <div class="ongoing-num">24</div>
+            <ui5-text class="ongoing-num">24</ui5-text>
           </div>
-          <div class="ongoing-text">On going Task</div>
+          <ui5-text class="ongoing-text">On going Task</ui5-text>
         </ui5-card>
         <ui5-card class="grid-item grid-item-5">
           <div class="upcoming-task">
             <ui5-icon class="time-upcoming" name="future"></ui5-icon>
-            <div class="upcoming-num">12</div>
+            <ui5-text class="upcoming-num">12</ui5-text>
           </div>
-          <div class="upcoming-text">Upcoming Task</div>
+          <ui5-text class="upcoming-text">Upcoming Task</ui5-text>
         </ui5-card>
 
         <!--  -->
+
         <ui5-card class="grid-item grid-item-6">
           <ui5-card class="task-card">
             <div class="task-header">
-              <span>On Going Task (25)</span>
-
+              <ui5-text>On Going Task (25)</ui5-text>
               <ui5-input
                 placeholder="Search"
                 class="search"
                 [value]="searchText()"
                 (input)="onSearchInput($event)"
-              ></ui5-input>
+              >
+                <!-- <ui5-icon id="valueHelpIcon" slot="icon" name="search"></ui5-icon> -->
+              </ui5-input>
             </div>
             <div class="task-list">
               <div class="task-row active" *ngFor="let machine of firstTableMachines()">
@@ -182,20 +189,21 @@
               </div>
             </div>
           </ui5-card>
-          <div class="divider"></div>
+          <ui5-menu-separator></ui5-menu-separator>
         </ui5-card>
 
         <ui5-card class="grid-item grid-item-7">
           <ui5-card class="task-card">
             <div class="task-header">
-              <span>Today & Overdue Task (25)</span>
-
+              <ui5-text>Today & Overdue Task (25)</ui5-text>
               <ui5-input
                 placeholder="Search"
                 class="search"
                 [value]="searchText()"
                 (input)="onSearchInput($event)"
-              ></ui5-input>
+              >
+                <!-- <ui5-icon id="valueHelpIcon" slot="icon" name="search"></ui5-icon> -->
+              </ui5-input>
             </div>
 
             <div class="task-list">
@@ -234,7 +242,7 @@
               </div>
             </div>
           </ui5-card>
-          <div class="divider"></div>
+          <ui5-menu-separator></ui5-menu-separator>
         </ui5-card>
       </section>
 
@@ -247,8 +255,7 @@
             <ui5-button design="Transparent" icon="information"> Open Description </ui5-button>
           </div>
 
-          <!-- DIVIDER -->
-          <div class="divider"></div>
+          <ui5-menu-separator></ui5-menu-separator>
 
           <!-- INFO GRID -->
           <div class="task-info-grid">
@@ -260,7 +267,7 @@
               </ui5-text>
             </div>
 
-            <div class="info-item">
+            <div class="info-item process">
               <ui5-label>Progress:</ui5-label>
               <ui5-slider
                 value="20"
@@ -305,8 +312,7 @@
             <ckeditor *ngIf="Editor" [editor]="Editor"> </ckeditor>
             <!-- [(ngModel)]="data" -->
           </div>
-          <!-- DIVIDER -->
-          <div class="divider"></div>
+          <ui5-menu-separator></ui5-menu-separator>
           <!-- FOOTER -->
           <footer class="save-btn">
             <ui5-button design="Emphasized">Save</ui5-button>

@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Machine } from './machines/machine';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
+import { ViewChild, ElementRef } from '@angular/core';
 
 interface UI5InputEvent extends Event {
   detail: { value: string };
@@ -27,6 +28,28 @@ interface UI5InputEvent extends Event {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App implements AfterViewInit, OnInit {
+  // moment clock
+currentTime = '';
+
+updateTime() {
+  this.currentTime = moment().format('DD.MM.YYYY, HH:mm');
+}
+
+  // menu button
+  @ViewChild('btnOpenBasic', { static: false })
+  btnRef!: ElementRef;
+
+  @ViewChild('menuBasic', { static: false })
+  menuRef!: ElementRef;
+
+  openMenu() {
+    const btn = this.btnRef.nativeElement;
+    const menu = this.menuRef.nativeElement;
+
+    if (btn && menu) {
+      menu.showAt(btn);
+    }
+  }
   // Signals
   protected readonly title = signal('Statusboard');
   machineList = signal<any[]>([]);
@@ -34,7 +57,7 @@ export class App implements AfterViewInit, OnInit {
 
   // CKEditor
   public Editor: any = null;
-//  public data: string = `Abram Elias: This task focuses on analyzing requirements and implementing the <br> necessary design and functional updates to improve overall system usability and clarity. <br> The goal is to ensure the task aligns with business objectives while maintaining with <br> existing design standards and workflows.<br> <br> The work includes reviewing current screen processes, identifying gaps or usability <br> issues, and proposing clear, user-friendly solutions. Coordination with stakeholders and <br> developers may be required to validate assumptions, finalize specifications, and ensure <br> smooth implementation within the defined timeline.<br> <br> Here are some points we discussed: <br> <br> • Support developers during implementation if clarification is needed <br> • Analyze current workflow system behavior.` ;
+  //  public data: string = `Abram Elias: This task focuses on analyzing requirements and implementing the <br> necessary design and functional updates to improve overall system usability and clarity. <br> The goal is to ensure the task aligns with business objectives while maintaining with <br> existing design standards and workflows.<br> <br> The work includes reviewing current screen processes, identifying gaps or usability <br> issues, and proposing clear, user-friendly solutions. Coordination with stakeholders and <br> developers may be required to validate assumptions, finalize specifications, and ensure <br> smooth implementation within the defined timeline.<br> <br> Here are some points we discussed: <br> <br> • Support developers during implementation if clarification is needed <br> • Analyze current workflow system behavior.` ;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -52,6 +75,12 @@ export class App implements AfterViewInit, OnInit {
     this.machineMachines.getMachineList().subscribe((data: any) => {
       this.machineList.set(data.value || []);
     });
+
+     // moment datepicker
+    this.updateTime();
+  setInterval(() => this.updateTime(), 1000);
+
+    
   }
 
   ngAfterViewInit(): void {
@@ -91,6 +120,7 @@ export class App implements AfterViewInit, OnInit {
     });
 
     menuEl.addEventListener('close', () => closeMenu(menuBtn));
+
   }
 
   // Computed machine lists
@@ -138,4 +168,6 @@ export class App implements AfterViewInit, OnInit {
     if (!date) return '00:00 Hrs';
     return moment.utc(date).local().format('HH:mm') + 'Hrs';
   }
+
 }
+

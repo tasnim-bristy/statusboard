@@ -55,6 +55,19 @@ body {
   font-weight: 600;
 }
 
+.dtp{
+  font-size: 14px;
+  color: #0064d9;
+  font-weight: 600;
+}
+
+.divider{
+  width: 1px;
+  height: 20px;
+  background-color: #ccc;
+  margin: 0 8px;
+}
+
 ui5-button {
   border: none;
   font-size: 14px;
@@ -68,8 +81,11 @@ ui5-button {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+/* [ui5-side-navigation-item]{
+  background-color: #000;
+} */
+
 .statusboard-btn {
-  background-color: #eaecee;
   border-radius: 8px;
   margin: 12px;
   font-size: 16px;
@@ -116,17 +132,6 @@ ui5-button {
   grid-column: span 6;
 }
 
-.grid-item-1,
-.grid-item-2,
-.grid-item-3,
-.grid-item-4,
-.grid-item-5,
-.grid-item-6,
-.grid-item-7 {
-  width: 100%;
-  height: auto;
-}
-
 .grid-item-3,
 .grid-item-4,
 .grid-item-5 {
@@ -138,10 +143,9 @@ ui5-button {
 .user-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
   justify-content: flex-start;
-  margin: 12px auto;
-  max-width: 276px;
+  margin: 14px 12px;
+  max-width: 100%;
   height: 56px;
   border-radius: 8px;
 }
@@ -154,8 +158,7 @@ ui5-button {
   border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 12px;
+  justify-content: flex-start;
 }
 
 .user-text::part(icon) {
@@ -192,8 +195,8 @@ ui5-button {
 /* ================= TIME ================= */
 .total-time {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  padding: 0 12px ;
   align-items: center;
 }
 
@@ -205,6 +208,8 @@ ui5-button {
 }
 
 .time {
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
   font-weight: 400;
 }
@@ -250,8 +255,8 @@ ui5-icon.fob-watch::part(root) {
 .act-header-btn {
   display: flex;
   gap: 4px;
-  padding-top: 8px;
-  padding-bottom: 4px;
+  padding-top: 4px;
+  padding-bottom: 3px;
 }
 
 .activity-details {
@@ -408,14 +413,22 @@ ui5-icon.time-upcoming::part(root) {
   border-bottom: 1px solid #ccc;
 }
 
-.task-header span {
+.task-header ui5-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1D2D3E;
   padding: 12px 16px;
 }
 
+/* .task-header ui5-input::part(ui5-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+} */
+
 .search {
   margin: 4px 16px;
-  width: 220px;
-  height: 36px;
 }
 
 .task-list {
@@ -566,26 +579,6 @@ ui5-icon.time-upcoming::part(root) {
   border: 1px solid #ccc;
 }
 
-.divider {
-  height: 1px;
-  background: #ccc;
-  margin: 1px 0;
-}
-
-.task-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 0 12px;
-}
-
-.deta-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-}
-
 .task-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -616,8 +609,20 @@ ui5-icon.time-upcoming::part(root) {
   padding: 16px;
 }
 
+.truncate{
+  font-size: 14px;
+  font-weight: 400;
+  color: #1D2D3E;
+}
+
 .editor {
   padding-bottom: 6px;
+}
+
+.info-item ui5-text{
+  font-size: 14px;
+  font-weight: 400;
+  color: #1D2D3E;
 }
 
 /* ================= TEXTAREA ================= */
@@ -749,12 +754,12 @@ ui5-icon.time-upcoming::part(root) {
   }
 
   .grid-item:nth-child(2) {
-   padding-bottom: 12px;
+    padding-bottom: 12px;
   }
 
   .task-list {
-  max-height: 150px;
-}
+    max-height: 150px;
+  }
 
   .sec-2 {
     grid-column: 2;

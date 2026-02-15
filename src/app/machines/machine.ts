@@ -5,11 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Machine {
-  constructor(private http:HttpClient){
-  
-  }
-  getMachineList(){
-    const url="http://shopfloor.test.local/odata/ProdOrderPosOperations?$select=id,name,start";
+  constructor(private http: HttpClient) {}
+  getMachineList() {
+    const url = 'http://shopfloor.test.local/odata/ProdOrderPosOperations?$select=id,name,start';
     return this.http.get<any>(url);
   }
 }
