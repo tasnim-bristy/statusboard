@@ -645,6 +645,38 @@ ui5-icon.time-upcoming::part(root) {
   justify-content: flex-end;
 }
 
+
+
+
+
+
+
+
+
+
+/* new table */
+.user-list{
+  display: grid;
+  grid-template-columns:  60px 200px 200px;
+  gap: 30px;
+  align-items: center;
+}
+
+.user-list ui5-text{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.task-header ui5-button{
+  margin: 12px 30px;
+  border: 1px solid #ccc;
+}
+
+
+
+
+
+
 /* responsive */
 @media (max-width: 1400px) {
   body {

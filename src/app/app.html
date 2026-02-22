@@ -140,7 +140,7 @@
 
         <!--  -->
 
-        <ui5-card class="grid-item grid-item-6">
+        <!-- <ui5-card class="grid-item grid-item-6">
           <ui5-card class="task-card">
             <div class="task-header">
               <ui5-text>On Going Task (25)</ui5-text>
@@ -150,7 +150,6 @@
                 [value]="searchText()"
                 (input)="onSearchInput($event)"
               >
-                <!-- <ui5-icon id="valueHelpIcon" slot="icon" name="search"></ui5-icon> -->
               </ui5-input>
             </div>
             <div class="task-list">
@@ -189,6 +188,52 @@
               </div>
             </div>
           </ui5-card>
+          <ui5-menu-separator></ui5-menu-separator>
+        </ui5-card> -->
+
+        <ui5-card class="grid-item grid-item-6">
+          <ui5-card class="task-card">
+            <div class="task-header">
+              <ui5-text>Machine</ui5-text>
+              <ui5-button (click)="openDialog()">New</ui5-button>
+            </div>
+            <div class="task-list">
+              <div class="task-row active" *ngFor="let machine of firstTableMachines()">
+                <div class="task-content">
+                  <ui5-title wrapping-type="None"
+                    ><ul>
+                      <li class="user-list">
+                        <ui5-text class="title-header truncate-text">{{ machine.id }}</ui5-text>
+                        <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
+                        <ui5-text class="title-header truncate-text">{{
+                          machine.custom_id
+                        }}</ui5-text>
+                      </li>
+                    </ul>
+                  </ui5-title>
+                </div>
+
+                <ui5-button icon="edit" class="start-btn"></ui5-button>
+                <ui5-button icon="delete" class="start-btn"></ui5-button>
+              </div>
+            </div>
+          </ui5-card>
+          <!-- Dialog -->
+          <ui5-dialog #newMachineDialog header-text="Add New Machine">
+            <div class="dialog-content">
+              <ui5-label>Machine Name</ui5-label>
+              <ui5-input [value]="newMachine.name" (input)="onMachineNameInput($event)"></ui5-input>
+
+              <ui5-label>Custom ID</ui5-label>
+              <ui5-input
+                [value]="newMachine.custom_id"
+                (input)="onMachineCustomIdInput($event)"
+              ></ui5-input>
+            </div>
+
+            <ui5-button (click)="addMachine()" design="Emphasized">Add</ui5-button>
+            <ui5-button (click)="closeDialog()">Cancel</ui5-button>
+          </ui5-dialog>
           <ui5-menu-separator></ui5-menu-separator>
         </ui5-card>
 

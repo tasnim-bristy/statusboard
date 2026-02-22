@@ -53,6 +53,9 @@ import "@ui5/webcomponents-icons/dist/pending.js";
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/MenuItem.js";
 import "@ui5/webcomponents/dist/MenuSeparator.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
+import "@ui5/webcomponents-icons/dist/delete.js";
+
 
 bootstrapApplication(App, {
   providers: [
