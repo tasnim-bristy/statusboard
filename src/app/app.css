@@ -655,16 +655,29 @@ ui5-icon.time-upcoming::part(root) {
 
 
 /* new table */
+.task-table-header{
+   display: grid;
+  grid-template-columns:  100px 150px 170px 120px;
+  gap: 30px;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.task-table-header ui5-text{
+  font-size: 18px;
+}
+
 .user-list{
   display: grid;
-  grid-template-columns:  60px 200px 200px;
+  grid-template-columns:  100px 200px 200px;
   gap: 30px;
   align-items: center;
 }
 
 .user-list ui5-text{
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .task-header ui5-button{
@@ -673,7 +686,36 @@ ui5-icon.time-upcoming::part(root) {
 }
 
 
+/* dialog */
+.dialog-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
 
+.name,
+.cus-id{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 6px;
+  align-items: center;
+  text-align: left;
+}
+
+
+.dialog-btn{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 0 0 12px;
+}
+
+.cancel-btn{
+  border: 1px solid #ccc;
+}
 
 
 

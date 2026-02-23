@@ -55,6 +55,11 @@ import "@ui5/webcomponents/dist/MenuItem.js";
 import "@ui5/webcomponents/dist/MenuSeparator.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/delete.js";
+import "@ui5/webcomponents/dist/Dialog.js";
+import "@ui5/webcomponents/dist/Toolbar.js"
+import "@ui5/webcomponents/dist/ToolbarButton.js"
+import "@ui5/webcomponents-icons/dist/accept.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 
 
 bootstrapApplication(App, {

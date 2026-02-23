@@ -8,7 +8,8 @@ export class Machine {
   constructor(private http: HttpClient) {}
   getMachineList() {
     // const url = 'http://shopfloor.test.local/odata/ProdOrderPosOperations?$select=id,name,start';
-    const url = 'http://shopfloor.test.local/odata/Machines';
+    // const url = 'http://shopfloor.test.local/odata/Machines';
+    const url = 'http://shopfloor.test.local/odata/Tools';
     return this.http.get<any>(url);
   }
 }

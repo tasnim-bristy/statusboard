@@ -194,8 +194,14 @@
         <ui5-card class="grid-item grid-item-6">
           <ui5-card class="task-card">
             <div class="task-header">
-              <ui5-text>Machine</ui5-text>
+              <ui5-text>Tools ({{ machineList().length }})</ui5-text>
               <ui5-button (click)="openDialog()">New</ui5-button>
+            </div>
+            <div class="task-table-header">
+              <ui5-text class="header-text">Active</ui5-text>
+              <ui5-text class="header-text">Name</ui5-text>
+              <ui5-text class="header-text">Custom ID</ui5-text>
+              <ui5-text class="header-text">Action</ui5-text>
             </div>
             <div class="task-list">
               <div class="task-row active" *ngFor="let machine of firstTableMachines()">
@@ -203,7 +209,7 @@
                   <ui5-title wrapping-type="None"
                     ><ul>
                       <li class="user-list">
-                        <ui5-text class="title-header truncate-text">{{ machine.id }}</ui5-text>
+                         <ui5-icon [name]="machine.is_active ? 'accept' : 'decline'" style="margin-left: 10px; width: 20px; height: 20px; color: #1D2D3E;"></ui5-icon>
                         <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
                         <ui5-text class="title-header truncate-text">{{
                           machine.custom_id
@@ -213,27 +219,36 @@
                   </ui5-title>
                 </div>
 
-                <ui5-button icon="edit" class="start-btn"></ui5-button>
-                <ui5-button icon="delete" class="start-btn"></ui5-button>
+                <ui5-button icon="edit" (click)="openDialog()" class="start-btn"></ui5-button>
+                <ui5-button icon="delete" (click)="deleteMachine(machine)"  class="start-btn"></ui5-button>
               </div>
             </div>
+
+            <!-- Dialog -->
+            <ui5-dialog #newMachineDialog header-text="Add New Machine">
+              <div class="dialog-content">
+                <div class="name">
+                  <ui5-label show-colon>Machine Name</ui5-label>
+                  <ui5-input
+                    [value]="newMachine.name"
+                    (input)="onMachineNameInput($event)"
+                  ></ui5-input>
+                </div>
+                <div class="cus-id">
+                  <ui5-label show-colon>Custom ID</ui5-label>
+                  <ui5-input
+                    [value]="newMachine.custom_id"
+                    (input)="onMachineCustomIdInput($event)"
+                  ></ui5-input>
+                </div>
+              </div>
+
+              <div class="dialog-btn">
+                <ui5-button (click)="addMachine()" design="Emphasized">Add</ui5-button>
+                <ui5-button class="cancel-btn" (click)="closeDialog()">Cancel</ui5-button>
+              </div>
+            </ui5-dialog>
           </ui5-card>
-          <!-- Dialog -->
-          <ui5-dialog #newMachineDialog header-text="Add New Machine">
-            <div class="dialog-content">
-              <ui5-label>Machine Name</ui5-label>
-              <ui5-input [value]="newMachine.name" (input)="onMachineNameInput($event)"></ui5-input>
-
-              <ui5-label>Custom ID</ui5-label>
-              <ui5-input
-                [value]="newMachine.custom_id"
-                (input)="onMachineCustomIdInput($event)"
-              ></ui5-input>
-            </div>
-
-            <ui5-button (click)="addMachine()" design="Emphasized">Add</ui5-button>
-            <ui5-button (click)="closeDialog()">Cancel</ui5-button>
-          </ui5-dialog>
           <ui5-menu-separator></ui5-menu-separator>
         </ui5-card>
 

@@ -29,11 +29,11 @@ interface UI5InputEvent extends Event {
 })
 export class App implements AfterViewInit, OnInit {
   // moment clock
-currentTime = '';
+  currentTime = '';
 
-updateTime() {
-  this.currentTime = moment().format('DD.MM.YYYY, HH:mm');
-}
+  updateTime() {
+    this.currentTime = moment().format('DD.MM.YYYY, HH:mm');
+  }
 
   // menu button
   @ViewChild('btnOpenBasic', { static: false })
@@ -76,11 +76,9 @@ updateTime() {
       this.machineList.set(data.value || []);
     });
 
-     // moment datepicker
+    // moment datepicker
     this.updateTime();
-  setInterval(() => this.updateTime(), 1000);
-
-    
+    setInterval(() => this.updateTime(), 1000);
   }
 
   ngAfterViewInit(): void {
@@ -120,7 +118,6 @@ updateTime() {
     });
 
     menuEl.addEventListener('close', () => closeMenu(menuBtn));
-
   }
 
   // Computed machine lists
@@ -131,8 +128,8 @@ updateTime() {
     );
   });
 
-  firstTableMachines = computed(() => this.filteredMachineList().slice(0, 40));
-  secondTableMachines = computed(() => this.filteredMachineList().slice(40, 80));
+  firstTableMachines = computed(() => this.filteredMachineList().slice(0, 20));
+  secondTableMachines = computed(() => this.filteredMachineList().slice(0, 20));
 
   // Search input
   onSearchInput(event: Event) {
@@ -169,49 +166,57 @@ updateTime() {
     return moment.utc(date).local().format('HH:mm') + 'Hrs';
   }
 
-
   // dialog
-  @ViewChild('newMachineDialog', { static: false }) newMachineDialog!: any;
+  @ViewChild('newMachineDialog', { static: false })
+  newMachineDialog!: ElementRef<any>;
 
-newMachine = { name: '', custom_id: '' };
-machines = [
-  { id: 1, name: 'Machine A', custom_id: 'M001' },
-  { id: 2, name: 'Machine B', custom_id: 'M002' }
-];
+  newMachine = { name: '', custom_id: '' };
 
-onMachineNameInput(event: Event) {
-  const inputEvent = event as CustomEvent<{ value: string }>;
-  this.newMachine.name = inputEvent.detail.value;
-}
+  //   machines = [
+  //   { id: 1, name: 'Machine A', custom_id: 'M001' },
+  //   { id: 2, name: 'Machine B', custom_id: 'M002' }
+  // ];
 
-onMachineCustomIdInput(event: Event) {
-  const inputEvent = event as CustomEvent<{ value: string }>;
-  this.newMachine.custom_id = inputEvent.detail.value;
-}
-
-
-
-openDialog() {
-  if (this.newMachineDialog) {
-    this.newMachineDialog.show();
-  } else {
-    alert('Dialog not ready yet!');
+  openDialog() {
+    this.newMachineDialog.nativeElement.open = true;
   }
+
+  closeDialog() {
+    this.newMachineDialog.nativeElement.open = false;
+  }
+
+  onMachineNameInput(event: Event) {
+    const inputEvent = event as CustomEvent<{ value: string }>;
+    this.newMachine.name = inputEvent.detail.value;
+  }
+
+  onMachineCustomIdInput(event: Event) {
+    const inputEvent = event as CustomEvent<{ value: string }>;
+    this.newMachine.custom_id = inputEvent.detail.value;
+  }
+
+  addMachine() {
+    if (!this.newMachine.name || !this.newMachine.custom_id) return;
+
+    const newId = Date.now();
+
+    this.machineList.update((list) => [
+      ...list,
+      {
+        id: newId,
+        name: this.newMachine.name,
+        custom_id: this.newMachine.custom_id,
+        is_active: true,
+      },
+    ]);
+
+    this.newMachine = { name: '', custom_id: '' };
+    this.closeDialog();
+  }
+
+  // delete row
+  deleteMachine(machine: any) {
+    this.machineList.update((list) => list.filter((m) => m.id !== machine.id));
+  }
+
 }
-
-
-closeDialog() {
-  this.newMachineDialog.close();
-}
-
-addMachine() {
-  if (!this.newMachine.name || !this.newMachine.custom_id) return; 
-  const newId = this.machines.length + 1;
-  this.machines.push({ id: newId, ...this.newMachine });
-  this.newMachine = { name: '', custom_id: '' }; 
-  this.closeDialog();
-}
-
-
-}
-
