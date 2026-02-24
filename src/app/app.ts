@@ -7,6 +7,8 @@ import {
   PLATFORM_ID,
   OnInit,
   computed,
+  ChangeDetectorRef,
+  NgZone,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import moment from 'moment';
@@ -14,6 +16,7 @@ import { Machine } from './machines/machine';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
+import { log } from 'console';
 
 interface UI5InputEvent extends Event {
   detail: { value: string };
@@ -33,6 +36,7 @@ export class App implements AfterViewInit, OnInit {
 
   updateTime() {
     this.currentTime = moment().format('DD.MM.YYYY, HH:mm');
+    this.cdr.detectChanges();
   }
 
   // menu button
@@ -62,6 +66,8 @@ export class App implements AfterViewInit, OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private machineMachines: Machine,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   // Browser-only CKEditor load + API fetch
@@ -72,9 +78,7 @@ export class App implements AfterViewInit, OnInit {
     }
 
     // Fetch machine list
-    this.machineMachines.getMachineList().subscribe((data: any) => {
-      this.machineList.set(data.value || []);
-    });
+    this.refreshMachines();
 
     // moment datepicker
     this.updateTime();
@@ -82,7 +86,7 @@ export class App implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return; // Only run in browser
+    if (!isPlatformBrowser(this.platformId)) return;
 
     const menuButton = document.getElementById('menuButton') as HTMLElement | null;
     const myMenu = document.getElementById('myMenu') as HTMLElement | null;
@@ -124,7 +128,7 @@ export class App implements AfterViewInit, OnInit {
   filteredMachineList = computed(() => {
     if (!this.searchText()) return this.machineList();
     return this.machineList().filter((machine) =>
-      machine.Name?.toLowerCase().includes(this.searchText().toLowerCase()),
+      machine.name?.toLowerCase().includes(this.searchText().toLowerCase()),
     );
   });
 
@@ -170,13 +174,7 @@ export class App implements AfterViewInit, OnInit {
   @ViewChild('newMachineDialog', { static: false })
   newMachineDialog!: ElementRef<any>;
 
-  newMachine = { name: '', custom_id: '' };
-
-  //   machines = [
-  //   { id: 1, name: 'Machine A', custom_id: 'M001' },
-  //   { id: 2, name: 'Machine B', custom_id: 'M002' }
-  // ];
-
+  newMachine:any = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
   openDialog() {
     this.newMachineDialog.nativeElement.open = true;
   }
@@ -185,38 +183,70 @@ export class App implements AfterViewInit, OnInit {
     this.newMachineDialog.nativeElement.open = false;
   }
 
-  onMachineNameInput(event: Event) {
-    const inputEvent = event as CustomEvent<{ value: string }>;
-    this.newMachine.name = inputEvent.detail.value;
-  }
+onMachineNameInput(event: Event) {
+  const inputEvent = event as CustomEvent<{ value: string }>;
+  this.newMachine.name = inputEvent.detail.value;
+}
 
-  onMachineCustomIdInput(event: Event) {
-    const inputEvent = event as CustomEvent<{ value: string }>;
-    this.newMachine.custom_id = inputEvent.detail.value;
-  }
+onMachineCustomIdInput(event: Event) {
+  const inputEvent = event as CustomEvent<{ value: string }>;
+  this.newMachine.custom_id = inputEvent.detail.value;
+}
 
-  addMachine() {
-    if (!this.newMachine.name || !this.newMachine.custom_id) return;
+addMachine(e: any) {
+  console.log(e);
+  
+  // if (!this.newMachine.name || !this.newMachine.custom_id) return;
 
-    const newId = Date.now();
+  const payload = {
+    name: this.newMachine.name,
+    custom_id: this.newMachine.custom_id,
+    is_active: this.newMachine.is_active,
+    is_imported_from_erp: this.newMachine.is_imported_from_erp
+  };
 
-    this.machineList.update((list) => [
-      ...list,
-      {
-        id: newId,
-        name: this.newMachine.name,
-        custom_id: this.newMachine.custom_id,
-        is_active: true,
-      },
-    ]);
+  console.log('Trying to add machine:', payload);
 
-    this.newMachine = { name: '', custom_id: '' };
-    this.closeDialog();
-  }
+  // this.machineMachines.addMachine(payload).subscribe({
+  //   next: (res: any) => {
+  //     console.log('Machine added successfully', res);
+  //     this.machineList.update((list) => [...list, res]);
+
+  //     this.cdr.detectChanges();
+
+  //     this.newMachine = { name: '', custom_id: '', is_active: true , is_imported_from_erp: false};
+
+  //     this.closeDialog();
+  //   },
+  //   error: (err) => console.error('Failed to add machine', err),
+  // });
+}
 
   // delete row
   deleteMachine(machine: any) {
-    this.machineList.update((list) => list.filter((m) => m.id !== machine.id));
+    this.machineMachines.deleteMachine(machine.id).subscribe(() => {
+      this.refreshMachines();
+    });
   }
 
+ refreshMachines() {
+  this.machineMachines.getMachineList().subscribe({
+    next: (data: any) => {
+      console.log('Fetched machines:', data.value || []);
+      this.machineList.set(data.value || []);
+    },
+    error: (err) => console.error('Failed to fetch machines', err),
+  });
+}
+
+  // switch change
+//  onSwitchChange(event: Event) {
+//   const customEvent = event as CustomEvent<{ checked: boolean }>;
+//   this.newMachine.is_active = customEvent.detail.checked;
+// }
+
+// onImportedChange(event: Event) {
+//   const switchEvent = event as CustomEvent<{ checked: boolean }>;
+//   this.newMachine.is_imported_from_erp = switchEvent.detail.checked;
+// }
 }

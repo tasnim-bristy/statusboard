@@ -687,13 +687,13 @@ ui5-icon.time-upcoming::part(root) {
 
 
 /* dialog */
-.dialog-content{
+/* .dialog-content{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 12px;
-}
+} */
 
 .name,
 .cus-id{
@@ -701,7 +701,19 @@ ui5-icon.time-upcoming::part(root) {
   grid-template-columns: 100px 1fr;
   gap: 6px;
   align-items: center;
+  justify-content: flex-start;
   text-align: left;
+}
+
+.name{
+  padding-bottom: 12px;
+}
+
+.switch-btn{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 
@@ -715,6 +727,13 @@ ui5-icon.time-upcoming::part(root) {
 
 .cancel-btn{
   border: 1px solid #ccc;
+}
+
+.active-icon{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
 
 
