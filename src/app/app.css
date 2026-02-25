@@ -736,6 +736,10 @@ ui5-icon.time-upcoming::part(root) {
   gap: 10px;
 }
 
+ui5-label {
+  pointer-events: none;
+}
+
 
 
 /* responsive */

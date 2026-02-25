@@ -138,9 +138,110 @@
           <ui5-text class="upcoming-text">Upcoming Task</ui5-text>
         </ui5-card>
 
-        <!--  -->
+        <ui5-card class="grid-item grid-item-6">
+          <ui5-card class="task-card">
+            <div class="task-header">
+              <ui5-text>Tools ({{ machineList().length }})</ui5-text>
+              <ui5-button (click)="openDialog()">New</ui5-button>
+            </div>
 
-        <!-- <ui5-card class="grid-item grid-item-6">
+            <div class="task-table-header">
+              <ui5-text class="header-text">Active</ui5-text>
+              <ui5-text class="header-text">Name</ui5-text>
+              <ui5-text class="header-text">Custom ID</ui5-text>
+              <ui5-text class="header-text">Action</ui5-text>
+            </div>
+
+            <div class="task-list">
+              <div class="task-row active" *ngFor="let machine of firstTableMachines()">
+                <div class="task-content">
+                  <ui5-title wrapping-type="None">
+                    <ul>
+                      <li class="user-list">
+                        <ui5-icon
+                          [name]="machine.is_active ? 'accept' : 'decline'"
+                          style="margin-left: 10px; width: 20px; height: 20px; color: #1d2d3e"
+                        >
+                        </ui5-icon>
+                        <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
+                        <ui5-text class="title-header truncate-text">{{
+                          machine.custom_id
+                        }}</ui5-text>
+                      </li>
+                    </ul>
+                  </ui5-title>
+                </div>
+
+                <ui5-button icon="edit" (click)="openDialog()" class="start-btn"></ui5-button>
+                <ui5-button
+                  icon="delete"
+                  (click)="deleteMachine(machine)"
+                  class="start-btn"
+                ></ui5-button>
+              </div>
+            </div>
+
+            <!-- Dialog -->
+            <ui5-dialog #newMachineDialog header-text="Add New Tools">
+              <form
+                (ngSubmit)="onSubmit(createOrUpdateForm)"
+                #createOrUpdateForm="ngForm"
+                class="dialog-content"
+              >
+                <div class="switch-btn">
+                  <div class="active-icon">
+                    <ui5-label show-colon>Active</ui5-label>
+                    <ui5-switch
+                      [(ngModel)]="newMachine.is_active"
+                      name="is_active"
+                      (change)="onSwitchChange($event)"
+                    ></ui5-switch>
+                  </div>
+
+                  <div class="active-icon">
+                    <ui5-label show-colon>Is Imported</ui5-label>
+                    <ui5-switch
+                      [(ngModel)]="newMachine.is_imported_from_erp"
+                      name="is_imported_from_erp"
+                      (change)="onImportedChange($event)"
+                    ></ui5-switch>
+                  </div>
+                </div>
+
+                <div class="name">
+                  <ui5-label show-colon>Machine Name</ui5-label>
+                  <ui5-input
+                    [(ngModel)]="newMachine.name"
+                    name="machineName"
+                    placeholder="Enter Machine Name"
+                    (change)="onNameInput($event)"
+                  ></ui5-input>
+                </div>
+
+                <div class="cus-id">
+                  <ui5-label show-colon>Custom ID</ui5-label>
+                  <ui5-input
+                    [(ngModel)]="newMachine.custom_id"
+                    name="machineCustomId"
+                    placeholder="Enter Custom ID"
+                    (change)="onCustomIdInput($event)"
+                  ></ui5-input>
+                </div>
+
+                <div class="dialog-btn">
+                  <ui5-button type="Submit" design="Emphasized" (click)="onSave()">Save</ui5-button>
+                  <ui5-button type="Button" (click)="closeDialog()">Cancel</ui5-button>
+                </div>
+              </form>
+            </ui5-dialog>
+          </ui5-card>
+
+          <ui5-menu-separator></ui5-menu-separator>
+        </ui5-card>
+
+        <!--  -->
+        <!-- 
+        <ui5-card class="grid-item grid-item-6">
           <ui5-card class="task-card">
             <div class="task-header">
               <ui5-text>On Going Task (25)</ui5-text>
@@ -190,85 +291,6 @@
           </ui5-card>
           <ui5-menu-separator></ui5-menu-separator>
         </ui5-card> -->
-
-        <ui5-card class="grid-item grid-item-6">
-          <ui5-card class="task-card">
-            <div class="task-header">
-              <ui5-text>Tools ({{ machineList().length }})</ui5-text>
-              <ui5-button (click)="openDialog()">New</ui5-button>
-            </div>
-            <div class="task-table-header">
-              <ui5-text class="header-text">Active</ui5-text>
-              <ui5-text class="header-text">Name</ui5-text>
-              <ui5-text class="header-text">Custom ID</ui5-text>
-              <ui5-text class="header-text">Action</ui5-text>
-            </div>
-            <div class="task-list">
-              <div class="task-row active" *ngFor="let machine of firstTableMachines()">
-                <div class="task-content">
-                  <ui5-title wrapping-type="None"
-                    ><ul>
-                      <li class="user-list">
-                        <ui5-icon
-                          [name]="machine.is_active ? 'accept' : 'decline'"
-                          style="margin-left: 10px; width: 20px; height: 20px; color: #1d2d3e"
-                        ></ui5-icon>
-                        <ui5-text class="title-header truncate-text">{{ machine.name }}</ui5-text>
-                        <ui5-text class="title-header truncate-text">{{
-                          machine.custom_id
-                        }}</ui5-text>
-                      </li>
-                    </ul>
-                  </ui5-title>
-                </div>
-
-                <ui5-button icon="edit" (click)="openDialog()" class="start-btn"></ui5-button>
-                <ui5-button
-                  icon="delete"
-                  (click)="deleteMachine(machine)"
-                  class="start-btn"
-                ></ui5-button>
-              </div>
-            </div>
-
-            <!-- Dialog -->
-            <ui5-dialog #newMachineDialog header-text="Add New Tools">
-              <form (ngSubmit)="addMachine">
-                <div class="dialog-content">
-                <div class="switch-btn">
-                  <div class="active-icon">
-                    <ui5-label slot="labelContent" show-colon>Active</ui5-label>
-                   <ui5-switch [(checked)]="newMachine.is_active"></ui5-switch>
-                  </div>
-                  <div class="active-icon">
-                    <ui5-label slot="labelContent" show-colon>Is Imported</ui5-label>
-                    <ui5-switch [(ngModel)]="newMachine.is_imported_from_erp" name="is_imported_from_erp">{{newMachine.is_imported_from_erp}}</ui5-switch>
-                  </div>
-                </div>
-                <div class="name">
-                  <ui5-label show-colon>Machine Name</ui5-label>
-                  <ui5-input
-                    [(ngModel)]="newMachine.name"
-                    (input)="onMachineNameInput($event)"
-                  ></ui5-input>
-                </div>
-                <div class="cus-id">
-                  <ui5-label show-colon>Custom ID</ui5-label>
-                  <ui5-input
-                    [value]="newMachine.custom_id"
-                    (input)="onMachineCustomIdInput($event)"
-                  ></ui5-input>
-                </div>
-              </div>
-              </form>
-              <div class="dialog-btn">
-                <ui5-button (click)="addMachine($event)" design="Emphasized">Save</ui5-button>
-                <ui5-button class="cancel-btn" (click)="closeDialog()">Cancel</ui5-button>
-              </div>
-            </ui5-dialog>
-          </ui5-card>
-          <ui5-menu-separator></ui5-menu-separator>
-        </ui5-card>
 
         <ui5-card class="grid-item grid-item-7">
           <ui5-card class="task-card">

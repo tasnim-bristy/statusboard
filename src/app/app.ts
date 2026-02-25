@@ -14,7 +14,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import moment from 'moment';
 import { Machine } from './machines/machine';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { log } from 'console';
 
@@ -31,8 +31,15 @@ interface UI5InputEvent extends Event {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App implements AfterViewInit, OnInit {
-  // moment clock
+  @ViewChild('createOrUpdateForm') form?: NgForm;
   currentTime = '';
+  // inside App component
+  public newMachine = {
+    name: '',
+    custom_id: '',
+    is_active: true,
+    is_imported_from_erp: false,
+  };
 
   updateTime() {
     this.currentTime = moment().format('DD.MM.YYYY, HH:mm');
@@ -67,7 +74,7 @@ export class App implements AfterViewInit, OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private machineMachines: Machine,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {}
 
   // Browser-only CKEditor load + API fetch
@@ -174,7 +181,6 @@ export class App implements AfterViewInit, OnInit {
   @ViewChild('newMachineDialog', { static: false })
   newMachineDialog!: ElementRef<any>;
 
-  newMachine:any = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
   openDialog() {
     this.newMachineDialog.nativeElement.open = true;
   }
@@ -183,45 +189,46 @@ export class App implements AfterViewInit, OnInit {
     this.newMachineDialog.nativeElement.open = false;
   }
 
-onMachineNameInput(event: Event) {
-  const inputEvent = event as CustomEvent<{ value: string }>;
-  this.newMachine.name = inputEvent.detail.value;
-}
+  onNameInput(event: any) {
+    this.newMachine.name = (event.target as any).value;
+    // console.log('aaaa', event.target);
+  }
 
-onMachineCustomIdInput(event: Event) {
-  const inputEvent = event as CustomEvent<{ value: string }>;
-  this.newMachine.custom_id = inputEvent.detail.value;
-}
+  onCustomIdInput(event: any) {
+    this.newMachine.custom_id = (event.target as any).value;
+  }
+  onSave() {
+    (this.form as any).onSubmit(undefined);
+  }
 
-addMachine(e: any) {
-  console.log(e);
-  
-  // if (!this.newMachine.name || !this.newMachine.custom_id) return;
+  onSubmit(form: NgForm) {
+    this.addMachine();
+  }
 
-  const payload = {
-    name: this.newMachine.name,
-    custom_id: this.newMachine.custom_id,
-    is_active: this.newMachine.is_active,
-    is_imported_from_erp: this.newMachine.is_imported_from_erp
-  };
+  addMachine() {
+    const payload = {
+      name: this.newMachine.name?.trim(),
+      custom_id: this.newMachine.custom_id?.trim(),
+      is_active: this.newMachine.is_active,
+      is_imported_from_erp: this.newMachine.is_imported_from_erp,
+    };
 
-  console.log('Trying to add machine:', payload);
+    console.log('Payload before sending:', payload);
 
-  // this.machineMachines.addMachine(payload).subscribe({
-  //   next: (res: any) => {
-  //     console.log('Machine added successfully', res);
-  //     this.machineList.update((list) => [...list, res]);
+    if (!payload.name || !payload.custom_id) {
+      console.warn('Name or Custom ID missing');
+      return;
+    }
 
-  //     this.cdr.detectChanges();
-
-  //     this.newMachine = { name: '', custom_id: '', is_active: true , is_imported_from_erp: false};
-
-  //     this.closeDialog();
-  //   },
-  //   error: (err) => console.error('Failed to add machine', err),
-  // });
-}
-
+    this.machineMachines.addMachine(payload).subscribe({
+      next: (res: any) => {
+        this.machineList.update((list) => [...list, res]);
+        this.newMachine = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
+        this.closeDialog();
+      },
+      error: (err) => console.error('Failed to add machine:', err),
+    });
+  }
   // delete row
   deleteMachine(machine: any) {
     this.machineMachines.deleteMachine(machine.id).subscribe(() => {
@@ -229,24 +236,24 @@ addMachine(e: any) {
     });
   }
 
- refreshMachines() {
-  this.machineMachines.getMachineList().subscribe({
-    next: (data: any) => {
-      console.log('Fetched machines:', data.value || []);
-      this.machineList.set(data.value || []);
-    },
-    error: (err) => console.error('Failed to fetch machines', err),
-  });
+  refreshMachines() {
+    this.machineMachines.getMachineList().subscribe({
+      next: (data: any) => {
+        console.log('Fetched machines:', data.value || []);
+        this.machineList.set(data.value || []);
+      },
+    });
+  }
+
+    // switch change
+ onSwitchChange(event: Event) {
+  const customEvent = event as CustomEvent<{ checked: boolean }>;
+  this.newMachine.is_active = (event.target as any).checked;
 }
 
-  // switch change
-//  onSwitchChange(event: Event) {
-//   const customEvent = event as CustomEvent<{ checked: boolean }>;
-//   this.newMachine.is_active = customEvent.detail.checked;
-// }
+onImportedChange(event: Event) {
+  const switchEvent = event as CustomEvent<{ checked: boolean }>;
+  this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
+}
 
-// onImportedChange(event: Event) {
-//   const switchEvent = event as CustomEvent<{ checked: boolean }>;
-//   this.newMachine.is_imported_from_erp = switchEvent.detail.checked;
-// }
 }
