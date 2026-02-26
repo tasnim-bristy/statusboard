@@ -8,7 +8,6 @@ import {
   OnInit,
   computed,
   ChangeDetectorRef,
-  NgZone,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import moment from 'moment';
@@ -17,6 +16,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
 import { log } from 'console';
+// import { Ui5WebcomponentsModule } from '@ui5/webcomponents-ngx';
 
 interface UI5InputEvent extends Event {
   detail: { value: string };
@@ -74,7 +74,6 @@ export class App implements AfterViewInit, OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private machineMachines: Machine,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
   ) {}
 
   // Browser-only CKEditor load + API fetch
@@ -181,30 +180,86 @@ export class App implements AfterViewInit, OnInit {
   @ViewChild('newMachineDialog', { static: false })
   newMachineDialog!: ElementRef<any>;
 
-  openDialog() {
-    this.newMachineDialog.nativeElement.open = true;
+selectedMachineId: number | null = null;
+
+openDialog(machine?: any) {
+  if (machine) {
+    this.selectedMachineId = machine.id;
+    this.newMachine = { 
+      name: machine.name,
+      custom_id: machine.custom_id,
+      is_active: machine.is_active,
+      is_imported_from_erp: machine.is_imported_from_erp
+    };
+  } else {
+    this.selectedMachineId = null;
+    this.newMachine = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
   }
 
-  closeDialog() {
-    this.newMachineDialog.nativeElement.open = false;
-  }
+  this.cdr.detectChanges();
+  this.newMachineDialog.nativeElement.open = true;
+}
 
-  onNameInput(event: any) {
-    this.newMachine.name = (event.target as any).value;
-    // console.log('aaaa', event.target);
-  }
+closeDialog() {
+  this.selectedMachineId = null;
+  this.newMachineDialog.nativeElement.open = false;
+}
 
-  onCustomIdInput(event: any) {
-    this.newMachine.custom_id = (event.target as any).value;
-  }
+  // onNameInput(event: any) {
+  //   this.newMachine.name = (event.target as any).value;
+  // }
+
+  // onCustomIdInput(event: any) {
+  //   this.newMachine.custom_id = (event.target as any).value;
+  // }
+
+  onNameInput(event: Event) {
+  const target = event.target as HTMLInputElement | null;
+  if (target) this.newMachine.name = target.value;
+}
+
+onCustomIdInput(event: Event) {
+  const target = event.target as HTMLInputElement | null;
+  if (target) this.newMachine.custom_id = target.value;
+}
+
   onSave() {
     (this.form as any).onSubmit(undefined);
   }
 
-  onSubmit(form: NgForm) {
+onSubmit(form: NgForm) {
+
+  if (this.selectedMachineId) {
+    this.updateMachineData();
+  } else {
     this.addMachine();
   }
+}
 
+// updateMachine
+updateMachineData() {
+
+  const payload = {
+    name: this.newMachine.name?.trim(),
+    custom_id: this.newMachine.custom_id?.trim(),
+    is_active: this.newMachine.is_active,
+    is_imported_from_erp: this.newMachine.is_imported_from_erp,
+  };
+
+  if (!this.selectedMachineId) return;
+
+  this.machineMachines.updateMachine(this.selectedMachineId, payload)
+    .subscribe({
+      next: () => {
+        this.refreshMachines();
+        this.selectedMachineId = null;
+        this.closeDialog();
+      },
+      error: (err) => console.error('Update failed:', err)
+    });
+}
+
+// addMAchine
   addMachine() {
     const payload = {
       name: this.newMachine.name?.trim(),
@@ -236,6 +291,32 @@ export class App implements AfterViewInit, OnInit {
     });
   }
 
+  // delete dialog
+  @ViewChild('deleteConfirmDialog', {static: false})
+  deleteConfirmDialog!: ElementRef<any>;
+
+  machineToDelete: any = null;
+
+  openDeleteDialog(machine: any) {
+  this.machineToDelete = machine;
+  this.deleteConfirmDialog.nativeElement.open = true;
+}
+
+closeDeleteDialog() {
+  this.machineToDelete = null;
+  this.deleteConfirmDialog.nativeElement.open = false;
+}
+
+confirmDelete() {
+  if (!this.machineToDelete) return;
+
+  this.machineMachines.deleteMachine(this.machineToDelete.id)
+    .subscribe(() => {
+      this.refreshMachines();
+      this.closeDeleteDialog();
+    });
+}
+
   refreshMachines() {
     this.machineMachines.getMachineList().subscribe({
       next: (data: any) => {
@@ -246,14 +327,24 @@ export class App implements AfterViewInit, OnInit {
   }
 
     // switch change
- onSwitchChange(event: Event) {
-  const customEvent = event as CustomEvent<{ checked: boolean }>;
-  this.newMachine.is_active = (event.target as any).checked;
+//  onSwitchChange(event: Event) {
+//   const customEvent = event as CustomEvent<{ checked: boolean }>;
+//   this.newMachine.is_active = (customEvent.target as any).checked;
+// }
+
+// onImportedChange(event: Event) {
+//   const switchEvent = event as CustomEvent<{ checked: boolean }>;
+//   this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
+// }
+
+onSwitchChange(event: Event) {
+  const target = event.target as HTMLInputElement | null;
+  if (target) this.newMachine.is_active = target.checked;
 }
 
 onImportedChange(event: Event) {
-  const switchEvent = event as CustomEvent<{ checked: boolean }>;
-  this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
+  const target = event.target as HTMLInputElement | null;
+  if (target) this.newMachine.is_imported_from_erp = target.checked;
 }
 
 }

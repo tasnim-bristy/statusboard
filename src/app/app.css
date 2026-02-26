@@ -729,6 +729,10 @@ ui5-icon.time-upcoming::part(root) {
   border: 1px solid #ccc;
 }
 
+.no-btn{
+  border: 1px solid #ccc;
+}
+
 .active-icon{
   display: flex;
   justify-content: flex-start;

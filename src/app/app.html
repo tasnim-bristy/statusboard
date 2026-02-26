@@ -172,10 +172,14 @@
                   </ui5-title>
                 </div>
 
-                <ui5-button icon="edit" (click)="openDialog()" class="start-btn"></ui5-button>
+                <ui5-button
+                  icon="edit"
+                  (click)="openDialog(machine)"
+                  class="start-btn"
+                ></ui5-button>
                 <ui5-button
                   icon="delete"
-                  (click)="deleteMachine(machine)"
+                  (click)="openDeleteDialog(machine)"
                   class="start-btn"
                 ></ui5-button>
               </div>
@@ -209,23 +213,19 @@
                 </div>
 
                 <div class="name">
-                  <ui5-label show-colon>Machine Name</ui5-label>
+                  <ui5-label show-colon>Tools Name</ui5-label>
                   <ui5-input
-                    [(ngModel)]="newMachine.name"
-                    name="machineName"
-                    placeholder="Enter Machine Name"
-                    (change)="onNameInput($event)"
-                  ></ui5-input>
+  [value]="newMachine.name"
+  (change)="onNameInput($event)"
+></ui5-input>
                 </div>
 
                 <div class="cus-id">
                   <ui5-label show-colon>Custom ID</ui5-label>
-                  <ui5-input
-                    [(ngModel)]="newMachine.custom_id"
-                    name="machineCustomId"
-                    placeholder="Enter Custom ID"
-                    (change)="onCustomIdInput($event)"
-                  ></ui5-input>
+                 <ui5-input
+  [value]="newMachine.custom_id"
+  (change)="onCustomIdInput($event)"
+></ui5-input>
                 </div>
 
                 <div class="dialog-btn">
@@ -233,6 +233,20 @@
                   <ui5-button type="Button" (click)="closeDialog()">Cancel</ui5-button>
                 </div>
               </form>
+            </ui5-dialog>
+
+            <!-- delete dialog -->
+            <ui5-dialog #deleteConfirmDialog header-text="Confirm Delete">
+              <div style="padding: 1rem">
+                <ui5-text>Are you sure you want to delete this tool?</ui5-text>
+              </div>
+
+              <div slot="footer" style="display: flex; justify-content: flex-end; gap: 10px">
+                <ui5-button class="no-btn" design="Transparent" (click)="closeDeleteDialog()"
+                  >No</ui5-button
+                >
+                <ui5-button design="Negative" (click)="confirmDelete()">Yes</ui5-button>
+              </div>
             </ui5-dialog>
           </ui5-card>
 
@@ -370,10 +384,10 @@
             <div class="info-item process">
               <ui5-label>Progress:</ui5-label>
               <ui5-slider
-                value="20"
-                min="0"
-                max="100"
-                step="5"
+                [value]="20"
+                [min]="0"
+                [max]="100"
+                [step]="5"
                 show-tickmarks
                 label-interval="2"
               ></ui5-slider>
