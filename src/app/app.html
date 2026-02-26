@@ -214,18 +214,15 @@
 
                 <div class="name">
                   <ui5-label show-colon>Tools Name</ui5-label>
-                  <ui5-input
-  [value]="newMachine.name"
-  (change)="onNameInput($event)"
-></ui5-input>
+                  <ui5-input [value]="newMachine.name" (change)="onNameInput($event)"></ui5-input>
                 </div>
 
                 <div class="cus-id">
                   <ui5-label show-colon>Custom ID</ui5-label>
-                 <ui5-input
-  [value]="newMachine.custom_id"
-  (change)="onCustomIdInput($event)"
-></ui5-input>
+                  <ui5-input
+                    [value]="newMachine.custom_id"
+                    (change)="onCustomIdInput($event)"
+                  ></ui5-input>
                 </div>
 
                 <div class="dialog-btn">

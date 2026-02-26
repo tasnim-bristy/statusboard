@@ -180,30 +180,30 @@ export class App implements AfterViewInit, OnInit {
   @ViewChild('newMachineDialog', { static: false })
   newMachineDialog!: ElementRef<any>;
 
-selectedMachineId: number | null = null;
+  selectedMachineId: number | null = null;
 
-openDialog(machine?: any) {
-  if (machine) {
-    this.selectedMachineId = machine.id;
-    this.newMachine = { 
-      name: machine.name,
-      custom_id: machine.custom_id,
-      is_active: machine.is_active,
-      is_imported_from_erp: machine.is_imported_from_erp
-    };
-  } else {
-    this.selectedMachineId = null;
-    this.newMachine = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
+  openDialog(machine?: any) {
+    if (machine) {
+      this.selectedMachineId = machine.id;
+      this.newMachine = {
+        name: machine.name,
+        custom_id: machine.custom_id,
+        is_active: machine.is_active,
+        is_imported_from_erp: machine.is_imported_from_erp,
+      };
+    } else {
+      this.selectedMachineId = null;
+      this.newMachine = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
+    }
+
+    this.cdr.detectChanges();
+    this.newMachineDialog.nativeElement.open = true;
   }
 
-  this.cdr.detectChanges();
-  this.newMachineDialog.nativeElement.open = true;
-}
-
-closeDialog() {
-  this.selectedMachineId = null;
-  this.newMachineDialog.nativeElement.open = false;
-}
+  closeDialog() {
+    this.selectedMachineId = null;
+    this.newMachineDialog.nativeElement.open = false;
+  }
 
   // onNameInput(event: any) {
   //   this.newMachine.name = (event.target as any).value;
@@ -214,52 +214,49 @@ closeDialog() {
   // }
 
   onNameInput(event: Event) {
-  const target = event.target as HTMLInputElement | null;
-  if (target) this.newMachine.name = target.value;
-}
+    const target = event.target as HTMLInputElement | null;
+    if (target) this.newMachine.name = target.value;
+  }
 
-onCustomIdInput(event: Event) {
-  const target = event.target as HTMLInputElement | null;
-  if (target) this.newMachine.custom_id = target.value;
-}
+  onCustomIdInput(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    if (target) this.newMachine.custom_id = target.value;
+  }
 
   onSave() {
     (this.form as any).onSubmit(undefined);
   }
 
-onSubmit(form: NgForm) {
-
-  if (this.selectedMachineId) {
-    this.updateMachineData();
-  } else {
-    this.addMachine();
+  onSubmit(form: NgForm) {
+    if (this.selectedMachineId) {
+      this.updateMachineData();
+    } else {
+      this.addMachine();
+    }
   }
-}
 
-// updateMachine
-updateMachineData() {
+  // updateMachine
+  updateMachineData() {
+    const payload = {
+      name: this.newMachine.name?.trim(),
+      custom_id: this.newMachine.custom_id?.trim(),
+      is_active: this.newMachine.is_active,
+      is_imported_from_erp: this.newMachine.is_imported_from_erp,
+    };
 
-  const payload = {
-    name: this.newMachine.name?.trim(),
-    custom_id: this.newMachine.custom_id?.trim(),
-    is_active: this.newMachine.is_active,
-    is_imported_from_erp: this.newMachine.is_imported_from_erp,
-  };
+    if (!this.selectedMachineId) return;
 
-  if (!this.selectedMachineId) return;
-
-  this.machineMachines.updateMachine(this.selectedMachineId, payload)
-    .subscribe({
+    this.machineMachines.updateMachine(this.selectedMachineId, payload).subscribe({
       next: () => {
         this.refreshMachines();
         this.selectedMachineId = null;
         this.closeDialog();
       },
-      error: (err) => console.error('Update failed:', err)
+      error: (err) => console.error('Update failed:', err),
     });
-}
+  }
 
-// addMAchine
+  // addMAchine
   addMachine() {
     const payload = {
       name: this.newMachine.name?.trim(),
@@ -292,30 +289,29 @@ updateMachineData() {
   }
 
   // delete dialog
-  @ViewChild('deleteConfirmDialog', {static: false})
+  @ViewChild('deleteConfirmDialog', { static: false })
   deleteConfirmDialog!: ElementRef<any>;
 
   machineToDelete: any = null;
 
   openDeleteDialog(machine: any) {
-  this.machineToDelete = machine;
-  this.deleteConfirmDialog.nativeElement.open = true;
-}
+    this.machineToDelete = machine;
+    this.deleteConfirmDialog.nativeElement.open = true;
+  }
 
-closeDeleteDialog() {
-  this.machineToDelete = null;
-  this.deleteConfirmDialog.nativeElement.open = false;
-}
+  closeDeleteDialog() {
+    this.machineToDelete = null;
+    this.deleteConfirmDialog.nativeElement.open = false;
+  }
 
-confirmDelete() {
-  if (!this.machineToDelete) return;
+  confirmDelete() {
+    if (!this.machineToDelete) return;
 
-  this.machineMachines.deleteMachine(this.machineToDelete.id)
-    .subscribe(() => {
+    this.machineMachines.deleteMachine(this.machineToDelete.id).subscribe(() => {
       this.refreshMachines();
       this.closeDeleteDialog();
     });
-}
+  }
 
   refreshMachines() {
     this.machineMachines.getMachineList().subscribe({
@@ -326,25 +322,24 @@ confirmDelete() {
     });
   }
 
-    // switch change
-//  onSwitchChange(event: Event) {
-//   const customEvent = event as CustomEvent<{ checked: boolean }>;
-//   this.newMachine.is_active = (customEvent.target as any).checked;
-// }
+  // switch change
+  //  onSwitchChange(event: Event) {
+  //   const customEvent = event as CustomEvent<{ checked: boolean }>;
+  //   this.newMachine.is_active = (customEvent.target as any).checked;
+  // }
 
-// onImportedChange(event: Event) {
-//   const switchEvent = event as CustomEvent<{ checked: boolean }>;
-//   this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
-// }
+  // onImportedChange(event: Event) {
+  //   const switchEvent = event as CustomEvent<{ checked: boolean }>;
+  //   this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
+  // }
 
-onSwitchChange(event: Event) {
-  const target = event.target as HTMLInputElement | null;
-  if (target) this.newMachine.is_active = target.checked;
-}
+  onSwitchChange(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    if (target) this.newMachine.is_active = target.checked;
+  }
 
-onImportedChange(event: Event) {
-  const target = event.target as HTMLInputElement | null;
-  if (target) this.newMachine.is_imported_from_erp = target.checked;
-}
-
+  onImportedChange(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    if (target) this.newMachine.is_imported_from_erp = target.checked;
+  }
 }
