@@ -191,7 +191,30 @@
                 (ngSubmit)="onSubmit(createOrUpdateForm)"
                 #createOrUpdateForm="ngForm"
                 class="dialog-content"
+                style="position: relative; min-height: auto"
               >
+                <!-- Overlay spinner -->
+                <div
+                  *ngIf="isBusy"
+                  style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: rgba(255, 255, 255, 0.6);
+                    z-index: 1000;
+                  "
+                >
+                  <ui5-busy-indicator
+                    active="true"
+                    style="width: 3rem; height: 3rem"
+                  ></ui5-busy-indicator>
+                </div>
+
                 <div class="switch-btn">
                   <div class="active-icon">
                     <ui5-label show-colon>Active</ui5-label>
@@ -223,9 +246,15 @@
                   ></ui5-input>
                 </div>
 
-                <div class="dialog-btn">
-                  <ui5-button type="Submit" design="Emphasized" (click)="onSave()">Save</ui5-button>
-                  <ui5-busy-indicator></ui5-busy-indicator>
+                <div class="dialog-btn" style="display: flex; gap: 10px; align-items: center">
+                  <ui5-button
+                    type="Submit"
+                    design="Emphasized"
+                    [disabled]="isBusy"
+                    (click)="onSave()"
+                  >
+                    Save
+                  </ui5-button>
                   <ui5-button type="Button" (click)="closeDialog()">Cancel</ui5-button>
                 </div>
               </form>

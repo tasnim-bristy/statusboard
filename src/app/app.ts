@@ -223,9 +223,73 @@ export class App implements AfterViewInit, OnInit {
     if (target) this.newMachine.custom_id = target.value;
   }
 
-  onSave() {
-    (this.form as any).onSubmit(undefined);
+
+  // App component-এর মধ্যে
+isBusy: boolean = false; // busy indicator control
+
+onSave() {
+  if (!this.form) return;
+
+  this.isBusy = true; // Busy start
+
+  // Trigger form submit
+  (this.form as any).onSubmit(undefined);
+
+  // Since addMachine/updateMachine is async via subscribe, handle busy in there:
+  if (this.selectedMachineId) {
+    // Update
+    const payload = {
+      name: this.newMachine.name?.trim(),
+      custom_id: this.newMachine.custom_id?.trim(),
+      is_active: this.newMachine.is_active,
+      is_imported_from_erp: this.newMachine.is_imported_from_erp,
+    };
+
+    this.machineMachines.updateMachine(this.selectedMachineId, payload).subscribe({
+      next: () => {
+        this.refreshMachines();
+        this.selectedMachineId = null;
+        this.closeDialog();
+        this.isBusy = false; // Busy stop
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+        this.isBusy = false; // Busy stop even on error
+      },
+    });
+  } else {
+    // Add
+    const payload = {
+      name: this.newMachine.name?.trim(),
+      custom_id: this.newMachine.custom_id?.trim(),
+      is_active: this.newMachine.is_active,
+      is_imported_from_erp: this.newMachine.is_imported_from_erp,
+    };
+
+    if (!payload.name || !payload.custom_id) {
+      console.warn('Name or Custom ID missing');
+      this.isBusy = false;
+      return;
+    }
+
+    this.machineMachines.addMachine(payload).subscribe({
+      next: (res: any) => {
+        this.machineList.update((list) => [...list, res]);
+        this.newMachine = { name: '', custom_id: '', is_active: true, is_imported_from_erp: false };
+        this.closeDialog();
+        this.isBusy = false; // Busy stop
+      },
+      error: (err) => {
+        console.error('Failed to add machine:', err);
+        this.isBusy = false; // Busy stop
+      },
+    });
   }
+}
+
+  // onSave() {
+  //   (this.form as any).onSubmit(undefined);
+  // }
 
   onSubmit(form: NgForm) {
     if (this.selectedMachineId) {
