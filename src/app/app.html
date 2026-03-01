@@ -196,8 +196,7 @@
                   <div class="active-icon">
                     <ui5-label show-colon>Active</ui5-label>
                     <ui5-switch
-                      [(ngModel)]="newMachine.is_active"
-                      name="is_active"
+                      [checked]="newMachine.is_active"
                       (change)="onSwitchChange($event)"
                     ></ui5-switch>
                   </div>
@@ -205,8 +204,7 @@
                   <div class="active-icon">
                     <ui5-label show-colon>Is Imported</ui5-label>
                     <ui5-switch
-                      [(ngModel)]="newMachine.is_imported_from_erp"
-                      name="is_imported_from_erp"
+                      [checked]="newMachine.is_imported_from_erp"
                       (change)="onImportedChange($event)"
                     ></ui5-switch>
                   </div>
@@ -227,6 +225,7 @@
 
                 <div class="dialog-btn">
                   <ui5-button type="Submit" design="Emphasized" (click)="onSave()">Save</ui5-button>
+                  <ui5-busy-indicator></ui5-busy-indicator>
                   <ui5-button type="Button" (click)="closeDialog()">Cancel</ui5-button>
                 </div>
               </form>

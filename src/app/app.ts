@@ -322,17 +322,6 @@ export class App implements AfterViewInit, OnInit {
     });
   }
 
-  // switch change
-  //  onSwitchChange(event: Event) {
-  //   const customEvent = event as CustomEvent<{ checked: boolean }>;
-  //   this.newMachine.is_active = (customEvent.target as any).checked;
-  // }
-
-  // onImportedChange(event: Event) {
-  //   const switchEvent = event as CustomEvent<{ checked: boolean }>;
-  //   this.newMachine.is_imported_from_erp = (switchEvent.target as any).checked;
-  // }
-
   onSwitchChange(event: Event) {
     const target = event.target as HTMLInputElement | null;
     if (target) this.newMachine.is_active = target.checked;
